@@ -1,0 +1,11 @@
+<section data-ng-controller="JenkinsesController" data-ng-init="find()">
+  <ul class="jenkinses unstyled">
+    <li data-ng-repeat="jenkins in jenkinses">
+      <span>{{jenkins.created | date:'medium'}}</span> 
+      <h2>{{jenkins.name}}</h2>
+      <div>{{jenkins.url}}</div>
+      <div>{{jenkins.token}}</div>
+    </li>
+  </ul>
+  <h1 data-ng-hide="!jenkinses || jenkinses.length">No jenkinses yet. <br> Why don't you <a href="/#!/jenkinses/create">Create One</a>?</h1>
+</section>
