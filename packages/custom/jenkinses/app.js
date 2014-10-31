@@ -20,8 +20,8 @@ Jenkinses.register(function(app, auth, database) {
   Jenkinses.menus.add({
     title: 'List of jenkins modules',
     link: 'all jenkinses',
-    roles: ['authenticated'],
-    menu: 'main'
+    roles: ['authenticated']
+ 
   });
   Jenkinses.menus.add({
     'roles': ['authenticated'],

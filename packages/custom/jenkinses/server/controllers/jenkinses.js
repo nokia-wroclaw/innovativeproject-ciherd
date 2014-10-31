@@ -26,15 +26,8 @@ exports.jenkins = function(req, res, next, id) {
 exports.create = function(req, res) {
   var jenkins = new Jenkins(req.body);
 
-  jenkins.save(function(err) {
-    if (err) {
-      return res.json(500, {
-        error: 'Cannot save the jenkins'
-      });
-    }
-    res.json(jenkins);
-
-  });
+  jenkins.save();
+  res.jsonp(jenkins);
 };
 
 /**
