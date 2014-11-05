@@ -1,11 +1,11 @@
-<section data-ng-controller="JenkinsesController">
-    <form name="jenkinsForm" class="form-horizontal col-md-6" role="form" data-ng-submit="create(jenkinsForm.$valid)"
+<section data-ng-controller="JenkinsesController" data-ng-init="findOne()">
+    <form name="jenkinsForm" class="form-horizontal col-md-6" role="form" data-ng-submit="update(jenkinsForm.$valid)"
           novalidate>
         <div class="form-group" ng-class="{ 'has-error' : submitted && jenkinsForm.url.$invalid }">
-            <label mean-token="'create-name'" class="col-md-3 control-label">Description</label>
+            <label mean-token="'edit-name'" class="col-md-3 control-label">Description</label>
 
             <div class="col-md-9">
-                <input name="description" type="text" class="form-control" data-ng-model="description" id="description"
+                <input name="description" type="text" class="form-control" data-ng-model="jenkins.description" id="description"
                        placeholder="Description" required>
 
                 <div ng-show="submitted && jenkinsForm.description.$invalid" class="help-block">
@@ -15,10 +15,10 @@
         </div>
 
         <div class="form-group" ng-class="{ 'has-error' : submitted && jenkinsForm.url.$invalid }">
-            <label mean-token="'create-url'" class="col-md-3 control-label">URL</label>
+            <label mean-token="'edit-url'" class="col-md-3 control-label">URL</label>
 
             <div class="col-md-9">
-                <input name="url" type="url" class="form-control" data-ng-model="url" id="url" placeholder="Url"
+                <input name="url" type="url" class="form-control" data-ng-model="jenkins.url" id="url" placeholder="Url"
                        required>
 
                 <div ng-show="submitted && jenkinsForm.url.$invalid" class="help-block">
@@ -28,10 +28,10 @@
         </div>
 
         <div class="form-group" ng-class="{ 'has-error' : submitted && jenkinsForm.url.$invalid }">
-            <label mean-token="'create-url'" class="col-md-3 control-label">User ID</label>
+            <label mean-token="'edit-url'" class="col-md-3 control-label">User ID</label>
 
             <div class="col-md-9">
-                <input name="UserID" type="text" class="form-control" data-ng-model="UserID" id="UserID"
+                <input name="UserID" type="text" class="form-control" data-ng-model="jenkins.UserID" id="UserID"
                        placeholder="UserID" required>
 
                 <div ng-show="submitted && jenkinsForm.UserID.$invalid" class="help-block">
@@ -41,10 +41,10 @@
         </div>
 
         <div class="form-group" ng-class="{ 'has-error' : submitted && jenkinsForm.url.$invalid }">
-            <label mean-token="'create-url'" class="col-md-3 control-label">API Token</label>
+            <label mean-token="'edit-url'" class="col-md-3 control-label">API Token</label>
 
             <div class="col-md-9">
-                <input name="APIToken" type="text" class="form-control" data-ng-model="APIToken" id="APIToken"
+                <input name="APIToken" type="text" class="form-control" data-ng-model="jenkins.APIToken" id="APIToken"
                        placeholder="APIToken" required>
 
                 <div ng-show="submitted && jenkinsForm.APIToken.$invalid" class="help-block">
@@ -55,7 +55,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-3 col-md-9">
-                <button mean-token="'create-submit'" type="submit" class="btn btn-info">Submit</button>
+                <button mean-token="'edit-submit'" type="submit" class="btn btn-info">Submit</button>
             </div>
         </div>
     </form>

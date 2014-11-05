@@ -28,6 +28,7 @@ angular.module('mean.jenkinses', ['ngTable']).controller('JenkinsesController', 
         $scope.remove = function (jenkins) {
             if (jenkins) {
                 jenkins.$remove();
+                $location.path('jenkinses');
 
                 for (var i in $scope.jenkinses) {
                     if ($scope.jenkinses[i] === jenkins) {
@@ -35,7 +36,7 @@ angular.module('mean.jenkinses', ['ngTable']).controller('JenkinsesController', 
                     }
                 }
             } else {
-                $scope.jenkins.$remove(function (response) {
+                $scope.jenkins.$remove(function () {
                     $location.path('jenkinses');
                 });
             }
