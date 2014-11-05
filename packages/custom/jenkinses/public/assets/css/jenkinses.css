@@ -2,15 +2,15 @@
     background-color: purple
 }
 
-#JenkinsIcons {
+.JenkinsIcons {
     display: inline-flex;
     text-decoration: none;
 }
 
-#status-online {
+.status-online {
     color: green;
 }
 
-#status-offline {
+.status-offline {
     color: red;
 }

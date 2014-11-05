@@ -1,24 +1,24 @@
-<!--suppress ALL -->
-<section data-ng-controller="JenkinsesController" data-ng-init="find()">
-
-    <h1 data-ng-hide="!jenkinses || jenkinses.length">No jenkinses yet. <br> Why don't you <a
-            href="/#!/jenkinses/create">Create One</a>?</h1>
+<section data-ng-controller="JenkinsesListController" data-ng-init="find()">
     <button ng-click="tableParams.sorting({})" class="btn btn-default">Clear sorting</button>
-
-    <table data-ng-show="jenkinses && jenkinses.length" ng-table="tableParams" class="table">
-        <tr ng-repeat="jenkins in jenkinses">
+    {{checkboxes.items}}
+    <table ng-table="tableParams" class="table">
+        <tr ng-repeat="jenkins in $data">
             <td width="30" style="text-align: left" header="'ng-table/headers/checkbox.html'">
                 <input type="checkbox" ng-model="checkboxes.items[user.id]"/>
             </td>
             <td data-title="'_id'">{{jenkins._id}}</td>
             <td data-title="'Created'">{{jenkins.created | date: "shortTime"}}</td>
+            <td data-title="'URL'"><a href="{{jenkins.url}}">{{jenkins.url}}</a></td>
             <td data-title="'Description'">{{jenkins.description}}</td>
-            <td data-title="'URL'">{{jenkins.url}}</td>
             <td data-title="'User ID'">{{jenkins.UserID}}</td>
             <td data-title="'API Token'">{{jenkins.APIToken}}</td>
-            <td data-title="'Status'" id="status-online">Online</td>
+            <td data-title="'Status'">
+                <p class="status-online">Online
+                <a href="#" clas><i class="glyphicon glyphicon-refresh"></i></a>
+                </p>
+            </td>
 
-            <td data-title="'Actions'" id="JenkinsIcons">
+            <td data-title="'Actions'" class="JenkinsIcons">
                 <a class="btn" href="/#!/jenkinses/{{jenkins._id}}" target="_blank">
                     <i class="glyphicon glyphicon-asterisk"></i>
                 </a>
@@ -31,6 +31,9 @@
             </td>
         </tr>
     </table>
+    <script type="text/ng-template" id="ng-table/headers/checkbox.html">
+        <input type="checkbox" ng-model="checkboxes.checked" id="select_all" name="filter-checkbox" value=""/>
+    </script>
 
 </section>
 
