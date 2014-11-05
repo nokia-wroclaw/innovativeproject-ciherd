@@ -1,3 +1,16 @@
 .jenkinses-example h1 {
-  background-color: purple
+    background-color: purple
+}
+
+#JenkinsIcons {
+    display: inline-flex;
+    text-decoration: none;
+}
+
+#status-online {
+    color: green;
+}
+
+#status-offline {
+    color: red;
 }
