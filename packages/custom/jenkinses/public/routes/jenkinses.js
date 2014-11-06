@@ -52,6 +52,13 @@ angular.module('mean.jenkinses').config(['$stateProvider',
                 resolve: {
                     loggedin: checkLoggedin
                 }
+            })
+            .state('remove jenkins', {
+                url: '/jenkinses/:jenkinsId/remove',
+                templateUrl: 'jenkinses/views/remove.html',
+                resolve: {
+                    loggedin: checkLoggedin
+                }
             });
     }
 ]);

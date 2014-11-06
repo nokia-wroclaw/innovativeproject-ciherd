@@ -1,10 +1,12 @@
 <section data-ng-controller="JenkinsesListController" data-ng-init="find()">
-    <button ng-click="tableParams.sorting({})" class="btn btn-default">Clear sorting</button>
     {{checkboxes.items}}
+
     <table ng-table="tableParams" class="table">
         <tr ng-repeat="jenkins in $data">
             <td width="30" style="text-align: left" header="'ng-table/headers/checkbox.html'">
-                <input type="checkbox" ng-model="checkboxes.items[user.id]"/>
+                <label>
+                    <input type="checkbox" ng-model="checkboxes.items[jenkins._id]"/>
+                </label>
             </td>
             <td data-title="'_id'">{{jenkins._id}}</td>
             <td data-title="'Created'">{{jenkins.created | date: "shortTime"}}</td>
@@ -14,25 +16,25 @@
             <td data-title="'API Token'">{{jenkins.APIToken}}</td>
             <td data-title="'Status'">
                 <p class="status-online">Online
-                <a href="#" clas><i class="glyphicon glyphicon-refresh"></i></a>
+                <button ng-click="status(jenkins.url);"><i class="glyphicon glyphicon-refresh"></i></button>
                 </p>
             </td>
 
             <td data-title="'Actions'" class="JenkinsIcons">
-                <a class="btn" href="/#!/jenkinses/{{jenkins._id}}" target="_blank">
+                <a class="btn" href="/#!/jenkinses/{{jenkins._id}}">
                     <i class="glyphicon glyphicon-asterisk"></i>
                 </a>
-                <a class="btn" href="/#!/jenkinses/{{jenkins._id}}/edit" target="_blank">
+                <a class="btn" href="/#!/jenkinses/{{jenkins._id}}/edit">
                     <i class="glyphicon glyphicon-pencil"></i>
                 </a>
-                <a class="btn" href="/#!/jenkinses/{{jenkins._id}}/delete" target="_blank">
+                <a class="btn" href="/#!/jenkinses/{{jenkins._id}}/remove">
                     <i class="glyphicon glyphicon-trash"></i>
                 </a>
             </td>
         </tr>
     </table>
     <script type="text/ng-template" id="ng-table/headers/checkbox.html">
-        <input type="checkbox" ng-model="checkboxes.checked" id="select_all" name="filter-checkbox" value=""/>
+        <input type="checkbox" ng-model="checkboxes.checked" id="select_all" value=""/>
     </script>
 
 </section>

@@ -87,3 +87,26 @@ exports.all = function (req, res) {
 
     });
 };
+
+
+/**
+ * Check connection to selected website
+ */
+
+exports.status = function (req, res) {
+
+    var http = require('http');
+    var jenkins = req.jenkins;
+    var jenkinsURL = jenkins.url;
+    console.log(jenkinsURL);
+
+    http.get({host: jenkinsURL}, function () {
+        if (res.statusCode === 200) {
+            console.log('Online');
+            res.json({'Status': 'Online'});
+        } else {
+            console.log('Offline');
+            res.json({'Status': 'Online'});
+        }
+    });
+};

@@ -13,10 +13,10 @@ angular.module('mean.jenkinses', ['ngTable']).
                         UserID: this.UserID,
                         APIToken: this.APIToken
                     });
+                    //noinspection JSUnresolvedFunction
                     jenkins.$save(function (response) {
                         $location.path('jenkinses/' + response._id);
                     });
-
                     this.name = '';
                     this.url = '';
                     this.token = '';
@@ -27,15 +27,20 @@ angular.module('mean.jenkinses', ['ngTable']).
 
             $scope.remove = function (jenkins) {
                 if (jenkins) {
+                    //noinspection JSUnresolvedFunction
                     jenkins.$remove();
+                    $location.path('jenkinses');
 
                     for (var i in $scope.jenkinses) {
+                        //noinspection JSUnfilteredForInLoop
                         if ($scope.jenkinses[i] === jenkins) {
+                            //noinspection JSUnfilteredForInLoop
                             $scope.jenkinses.splice(i, 1);
                         }
                     }
                 } else {
-                    $scope.jenkins.$remove(function (response) {
+                    //noinspection JSUnresolvedFunction
+                    $scope.jenkins.$remove(function () {
                         $location.path('jenkinses');
                     });
                 }
@@ -49,6 +54,7 @@ angular.module('mean.jenkinses', ['ngTable']).
                     }
                     jenkins.updated.push(new Date().getTime());
 
+                    //noinspection JSUnresolvedFunction
                     jenkins.$update(function () {
                         $location.path('jenkinses/' + jenkins._id);
                     });
@@ -75,76 +81,50 @@ angular.module('mean.jenkinses', ['ngTable']).
         }
     ]).
     controller('JenkinsesListController',
-        function ($scope, $filter, $q, ngTableParams, Jenkinses) {
+    function ($scope, $filter, $q, ngTableParams, Jenkinses) {
         var data = Jenkinses.query(function (jenkinses) {
             $scope.jenkinses = jenkinses;
         });
 
+        /*jshint -W055 */
         $scope.tableParams = new ngTableParams({
             page: 1,            // show first page
-            count: 10           // count per page
+            count: 10,           // count per page
+            total: data.length // length of data
         }, {
-            total: data.length, // length of data
-            getData: function ($defer, params) {
+            getData: function ($defer) {
                 $defer.resolve(data);
             }
         });
-
-        var inArray = Array.prototype.indexOf ?
-            function (val, arr) {
-                return arr.indexOf(val);
-            } :
-            function (val, arr) {
-                var i = arr.length;
-                while (i--) {
-                    if (arr[i] === val) return i;
-                }
-                return -1
-            };
-        $scope.names = function (column) {
-            var def = $q.defer(),
-                arr = [],
-                names = [];
-            angular.forEach(data, function (item) {
-                if (inArray(item.name, arr) === -1) {
-                    arr.push(item.name);
-                    names.push({
-                        'id': item.name,
-                        'title': item.name
-                    });
-                }
-            });
-            def.resolve(names);
-            return def;
-        };
 
         $scope.checkboxes = {'checked': false, items: {}};
 
         // watch for check all checkbox
         $scope.$watch('checkboxes.checked', function (value) {
-            angular.forEach($scope.users, function (item) {
-                if (angular.isDefined(item.id)) {
-                    $scope.checkboxes.items[item.id] = value;
+            angular.forEach($scope.jenkinses, function (item) {
+                if (angular.isDefined(item._id)) {
+                    $scope.checkboxes.items[item._id] = value;
                 }
             });
         });
 
         // watch for data checkboxes
-        $scope.$watch('checkboxes.items', function (values) {
-            if (!$scope.users) {
+        $scope.$watch('checkboxes.items', function () {
+            if (!$scope.jenkinses) {
                 return;
             }
             var checked = 0, unchecked = 0,
-                total = $scope.users.length;
-            angular.forEach($scope.users, function (item) {
-                checked += ($scope.checkboxes.items[item.id]) || 0;
-                unchecked += (!$scope.checkboxes.items[item.id]) || 0;
+                total = $scope.jenkinses.length;
+            angular.forEach($scope.jenkinses, function (item) {
+                checked += ($scope.checkboxes.items[item._id]) || 0;
+                unchecked += (!$scope.checkboxes.items[item._id]) || 0;
             });
-            if ((unchecked == 0) || (checked == 0)) {
-                $scope.checkboxes.checked = (checked == total);
+            if ((unchecked === 0) || (checked === 0)) {
+                $scope.checkboxes.checked = (checked === total);
             }
             // grayed checkbox
-            angular.element(document.getElementById("select_all")).prop("indeterminate", (checked != 0 && unchecked != 0));
+            angular.element(document.getElementById('select_all')).
+                prop('indeterminate', (checked !== 0 && unchecked !== 0));
         }, true);
-    })
-;
+    });
+
