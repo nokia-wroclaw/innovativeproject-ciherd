@@ -1,39 +1,72 @@
-<section data-ng-controller="JenkinsesListController" data-ng-init="find()">
-    {{checkboxes.items}}
+<section data-ng-controller="JenkinsesListController">
+
+    <!--
+        {{checkboxes.items}}
+    -->
 
     <table ng-table="tableParams" class="table">
         <tr ng-repeat="jenkins in $data">
+            <!--
+                        <td data-title="'_id'">{{jenkins._id}}</td>
+                        <td data-title="'Created'">{{jenkins.created | date: "shortTime"}}</td>
+                        <td data-title="'User ID'">{{jenkins.UserID}}</td>
+                        <td data-title="'API Token'">{{jenkins.APIToken}}</td>
+            -->
+
             <td width="30" style="text-align: left" header="'ng-table/headers/checkbox.html'">
                 <label>
                     <input type="checkbox" ng-model="checkboxes.items[jenkins._id]"/>
                 </label>
             </td>
-            <td data-title="'_id'">{{jenkins._id}}</td>
-            <td data-title="'Created'">{{jenkins.created | date: "shortTime"}}</td>
-            <td data-title="'URL'"><a href="{{jenkins.url}}">{{jenkins.url}}</a></td>
             <td data-title="'Description'">{{jenkins.description}}</td>
-            <td data-title="'User ID'">{{jenkins.UserID}}</td>
-            <td data-title="'API Token'">{{jenkins.APIToken}}</td>
-            <td data-title="'Status'">
-                <p class="status-online">Online
-                <button ng-click="status(jenkins.url);"><i class="glyphicon glyphicon-refresh"></i></button>
-                </p>
+            <td data-title="'URL'"><a href="{{jenkins.url}}">{{jenkins.url}}</a></td>
+            <td data-title="'Latest Build Status'" style="text-align: center">
+                <span class="status-online">
+                    Passed
+                    <button ng-click="latestBuildStatus(jenkins)">
+                    <i class="glyphicon glyphicon-refresh"></i>
+                </button>
+
+                </span>
             </td>
 
-            <td data-title="'Actions'" class="JenkinsIcons">
-                <a class="btn" href="/#!/jenkinses/{{jenkins._id}}">
-                    <i class="glyphicon glyphicon-asterisk"></i>
+            <td data-title="'Connection Status'" style="text-align: center">
+                <span ng-if="jenkins.Online" class="status-online">
+                    Online
+                    <button ng-click="connectionStatus(jenkins)">
+                        <i class="glyphicon glyphicon-refresh"></i>
+                    </button>
+                </span>
+
+                <span ng-if="!jenkins.Online" class="status-offline">
+                    Offline
+                    <button ng-click="connectionStatus(jenkins)">
+                        <i class="glyphicon glyphicon-refresh"></i>
+                    </button>
+                </span>
+            </td>
+
+            <td data-title="'Actions'" style="text-align: right">
+                <a class="btn" href="#!/jenkinses/{{jenkins._id}}" title="View Jenkins">
+                    <i class="glyphicon glyphicon-eye-open"></i>
                 </a>
-                <a class="btn" href="/#!/jenkinses/{{jenkins._id}}/edit">
+                <a class="btn" href="#!/jenkinses/{{jenkins._id}}/edit" title="Edit Jenkins">
                     <i class="glyphicon glyphicon-pencil"></i>
                 </a>
-                <a class="btn" href="/#!/jenkinses/{{jenkins._id}}/remove">
+                <a class="btn" href="#!/jenkinses/{{jenkins._id}}/remove" title="Remove Jenkins">
                     <i class="glyphicon glyphicon-trash"></i>
+                </a>
+                <a class="btn" href="#!/jenkinses/{{jenkins._id}}/restart" title="Restart Jenkins">
+                    <i class="glyphicon glyphicon-repeat"></i>
+                </a>
+                <a class="btn" href="#!/jenkinses/{{jenkins._id}}/restart" title="Show XML Config">
+                    <i class="glyphicon glyphicon-cog"></i>
                 </a>
             </td>
         </tr>
     </table>
     <script type="text/ng-template" id="ng-table/headers/checkbox.html">
+        <label for="select_all"></label>
         <input type="checkbox" ng-model="checkboxes.checked" id="select_all" value=""/>
     </script>
 

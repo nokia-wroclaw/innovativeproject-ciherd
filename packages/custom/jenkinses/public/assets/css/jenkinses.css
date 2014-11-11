@@ -2,11 +2,6 @@
     background-color: purple
 }
 
-.JenkinsIcons {
-    display: inline-flex;
-    text-decoration: none;
-}
-
 .status-online {
     color: green;
 }

@@ -24,15 +24,20 @@ var JenkinsSchema = new Schema({
         type: String,
         required: true
     },
-    // API Token
     UserID: {
-        type: String,
-        required: true
+        type: String
     },
     APIToken: {
-        type: String,
-        required: true
-
+        type: String
+    },
+    ConnectionStatus:
+    {
+        Online: Boolean,
+        timestamp: Date
+    },
+    LatestBuildStatus: {
+        Status: Number,
+        timestamp: Date
     }
 });
 
@@ -47,15 +52,6 @@ JenkinsSchema.path('description').validate(function (description) {
 JenkinsSchema.path('url').validate(function (url) {
     return !!url;
 }, 'URL cannot be blank');
-
-JenkinsSchema.path('UserID').validate(function (UserID) {
-    return !!UserID;
-}, 'User ID cannot be blank');
-
-JenkinsSchema.path('APIToken').validate(function (APIToken) {
-    return !!APIToken;
-}, 'API Token cannot be blank');
-
 
 /**
  * Statics

@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('mean.jenkinses', ['ngTable']).
-    controller('JenkinsesController', ['$scope', '$stateParams', '$location', 'Global', 'Jenkinses',
+    controller('JenkinsesController',
+    ['$scope', '$stateParams', '$location', 'Global', 'Jenkinses',
         function ($scope, $stateParams, $location, Global, Jenkinses) {
             $scope.global = Global;
 
@@ -12,6 +13,7 @@ angular.module('mean.jenkinses', ['ngTable']).
                         url: this.url,
                         UserID: this.UserID,
                         APIToken: this.APIToken
+
                     });
                     //noinspection JSUnresolvedFunction
                     jenkins.$save(function (response) {
@@ -81,50 +83,83 @@ angular.module('mean.jenkinses', ['ngTable']).
         }
     ]).
     controller('JenkinsesListController',
-    function ($scope, $filter, $q, ngTableParams, Jenkinses) {
-        var data = Jenkinses.query(function (jenkinses) {
-            $scope.jenkinses = jenkinses;
-        });
+    ['$scope', '$filter', '$q', 'ngTableParams', 'Jenkinses', '$http',
+        function ($scope, $filter, $q, ngTableParams, Jenkinses, $http) {
+            var data = Jenkinses.query(function (jenkinses) {
+                $scope.jenkinses = jenkinses;
+            });
 
-        /*jshint -W055 */
-        $scope.tableParams = new ngTableParams({
-            page: 1,            // show first page
-            count: 10,           // count per page
-            total: data.length // length of data
-        }, {
-            getData: function ($defer) {
-                $defer.resolve(data);
-            }
-        });
+            /*jshint -W055 */
+            $scope.tableParams = new ngTableParams({
+                page: 1,            // show first page
+                count: 10           // count per page
+            }, {
+                total: data.length,  // length of data
+                /*
+                 getData: function ($defer, params) {
+                 console.log((params.page() - 1) * params.count());
+                 console.log(params.page() * params.count());
 
-        $scope.checkboxes = {'checked': false, items: {}};
-
-        // watch for check all checkbox
-        $scope.$watch('checkboxes.checked', function (value) {
-            angular.forEach($scope.jenkinses, function (item) {
-                if (angular.isDefined(item._id)) {
-                    $scope.checkboxes.items[item._id] = value;
+                 $defer.resolve($scope.users = data.slice(
+                 (params.page() - 1) * params.count(),
+                 params.page() * params.count())
+                 );
+                 }*/
+                getData: function ($defer) {
+                    $defer.resolve(data);
                 }
-            });
-        });
 
-        // watch for data checkboxes
-        $scope.$watch('checkboxes.items', function () {
-            if (!$scope.jenkinses) {
-                return;
-            }
-            var checked = 0, unchecked = 0,
-                total = $scope.jenkinses.length;
-            angular.forEach($scope.jenkinses, function (item) {
-                checked += ($scope.checkboxes.items[item._id]) || 0;
-                unchecked += (!$scope.checkboxes.items[item._id]) || 0;
             });
-            if ((unchecked === 0) || (checked === 0)) {
-                $scope.checkboxes.checked = (checked === total);
-            }
-            // grayed checkbox
-            angular.element(document.getElementById('select_all')).
-                prop('indeterminate', (checked !== 0 && unchecked !== 0));
-        }, true);
-    });
+
+            $scope.checkboxes = {'checked': false, items: {}};
+
+            // watch for check all checkbox
+            $scope.$watch('checkboxes.checked', function (value) {
+                angular.forEach($scope.jenkinses, function (item) {
+                    if (angular.isDefined(item._id)) {
+                        $scope.checkboxes.items[item._id] = value;
+                    }
+                });
+            });
+
+            // watch for data checkboxes
+            $scope.$watch('checkboxes.items', function () {
+                if (!$scope.jenkinses) {
+                    return;
+                }
+                var checked = 0, unchecked = 0,
+                    total = $scope.jenkinses.length;
+                angular.forEach($scope.jenkinses, function (item) {
+                    checked += ($scope.checkboxes.items[item._id]) || 0;
+                    unchecked += (!$scope.checkboxes.items[item._id]) || 0;
+                });
+                if ((unchecked === 0) || (checked === 0)) {
+                    $scope.checkboxes.checked = (checked === total);
+                }
+                // grayed checkbox
+                angular.element(document.getElementById('select_all')).
+                    prop('indeterminate', (checked !== 0 && unchecked !== 0));
+            }, true);
+
+
+            $scope.connectionStatus = function (jenkins) {
+                //$.get("http://127.0.0.1:3000/jenkinses/" + jenkins._id + "/status");
+                $http({
+                    method: 'GET',
+                    url: 'http://127.0.0.1:3000/jenkinses/' + jenkins._id + '/status'
+                }).success(function (data, status, headers, config) {
+                    console.log(data);
+                    jenkins.isOnline = data;
+                    // data contains the response
+                    // status is the HTTP status
+                    // headers is the header getter function
+                    // config is the object that was used to create the HTTP request
+                }).error(function (data, status, headers, config) {
+                });
+            };
+
+            $scope.latestBuildStatus = function (jenkins) {
+
+            };
+        }]);
 

@@ -94,19 +94,27 @@ exports.all = function (req, res) {
  */
 
 exports.status = function (req, res) {
-
     var http = require('http');
     var jenkins = req.jenkins;
-    var jenkinsURL = jenkins.url;
-    console.log(jenkinsURL);
 
-    http.get({host: jenkinsURL}, function () {
+    http.get(jenkins.url, function (res) {
+        console.log('Got response: ' + res.statusCode);
+        var jenkins = req.jenkins;
+
         if (res.statusCode === 200) {
-            console.log('Online');
-            res.json({'Status': 'Online'});
+            console.log('Zmień na online');
+            jenkins.Online = true;
         } else {
-            console.log('Offline');
-            res.json({'Status': 'Online'});
+            console.log('Zmień na offline');
+            jenkins.Online = false;
         }
+
+        jenkins = _.extend(jenkins, jenkins);
+        jenkins.save();
+
+    }).on('error', function (e) {
+        console.log('Got error: ' + e.message);
     });
+
+    res.json(jenkins.Online);
 };
