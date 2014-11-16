@@ -1,0 +1,71 @@
+<section data-ng-controller="JobListController">
+    <table ng-table="tableParams" class="table">
+        <tbody ng-repeat="jenkins in $data" data-ng-init="jobs(jenkins)">
+
+        <tr class="ng-table-group">
+            <td colspan="{{$columns.length}}">
+                <a href="" ng-click="jenkins.$hideRows = !jenkins.$hideRows">
+                    <span class="glyphicon" ng-class="{ 'glyphicon-chevron-right': jenkins.$hideRows, 'glyphicon-chevron-down': !jenkins.$hideRows }"></span>
+                    <strong>Jenkins:<a href="{{jenkins.url}}">{{ jenkins.description }}</a></strong>
+                </a>
+            </td>
+        </tr>
+
+        <tr ng-hide="jenkins.$hideRows" ng-repeat="job in jenkins.jobs">
+            <!--<td width="30" style="text-align: left" header="'ng-table/headers/checkbox.html'">-->
+                <!--<label>-->
+                    <!--<input type="checkbox" ng-model="checkboxes.items[jenkins._id]"/>-->
+                <!--</label>-->
+            <!--</td>-->
+            <td sortable="color" data-title="'Color'">
+                <span ng-if="job.color == 'blue'" title="Success" >
+                    <img src="jenkinses/assets/img/blue.png">
+                </span>
+                <span ng-if="job.color == 'red'" title="Failed">
+                    <img src="jenkinses/assets/img/red.png">
+                </span>
+                <span ng-if="job.color == 'disabled' || job.color =='notbuilt'">
+                    <img src="jenkinses/assets/img/disabled.png">
+                </span>
+                <span ng-if="job.color == 'blue_anime'" title="In progress">
+                    <img src="jenkinses/assets/img/blue_anime.gif">
+                </span>
+                <span ng-if="job.color == 'red_anime'" title="In progress">
+                    <img src="jenkinses/assets/img/red_anime.gif">
+                </span>
+            </td>
+            <td sortable="name" data-title="'Name'" align="center">
+                {{job.name}}
+            </td>
+            <td sortable="url" data-title="'Url'" align="center">
+                {{job.url}}
+            </td>
+            <td data-title="'Actions'" style="text-align: right">
+                <a class="btn" href="#!/jenkinses/{{jenkins._id}}" title="View Job">
+                    <i class="glyphicon glyphicon-eye-open"></i>
+                </a>
+                <a ng-if="job.color == 'disabled'" class="btn" ng-click="job_enable(jenkins, job.name)" title="Enable Job">
+                    <i class="glyphicon glyphicon-ok"></i>
+                </a>
+                <a ng-if="job.color != 'disabled'" class="btn" ng-click="job_disable(jenkins, job.name)" title="Disable Job">
+                    <i class="glyphicon glyphicon-remove"></i>
+                </a>
+
+                <a class="btn" href="#!/jenkinses/{{jenkins._id}}/edit" title="Edit Jenkins">
+                    <i class="glyphicon glyphicon-pencil"></i>
+                </a>
+                <a class="btn" ng-click="job_delete(jenkins, job.name)" title="Remove Job">
+                    <i class="glyphicon glyphicon-trash"></i>
+                </a>
+                <a class="btn" href="#!/jenkinses/{{jenkins._id}}/restart" title="Show XML Config">
+                    <i class="glyphicon glyphicon-cog"></i>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <script type="text/ng-template" id="ng-table/headers/checkbox.html">
+        <label for="select_all"></label>
+        <input type="checkbox" ng-model="checkboxes.checked" id="select_all" value=""/>
+    </script>
+</section>

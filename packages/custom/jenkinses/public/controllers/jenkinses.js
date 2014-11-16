@@ -143,6 +143,7 @@ angular.module('mean.jenkinses', ['ngTable']).
 
 
             $scope.connectionStatus = function (jenkins) {
+                console.log(jenkins._id);
                 //$.get("http://127.0.0.1:3000/jenkinses/" + jenkins._id + "/status");
                 $http({
                     method: 'GET',
@@ -161,5 +162,69 @@ angular.module('mean.jenkinses', ['ngTable']).
             $scope.latestBuildStatus = function (jenkins) {
 
             };
-        }]);
+        }]).
+    controller('JobListController',
+    ['$scope', '$filter', '$q', 'ngTableParams', 'Jenkinses', '$http','$stateParams',
+        function ($scope, $filter, $q, ngTableParams, Jenkinses, $http) {
+            var data = Jenkinses.query(function (jenkinses) {
+                $scope.jenkinses = jenkinses;
+            });
 
+            $scope.find = function () {
+                Jenkinses.query(function (jenkinses) {
+                    $scope.jenkinses = jenkinses;
+                });
+            };
+
+            $scope.tableParams = new ngTableParams({
+                page: 1,            // show first page
+                count: 10           // count per page
+            }, {
+                total: data.length,  // length of data
+
+                 /*getData: function ($defer, params) {
+                 console.log((params.page() - 1) * params.count());
+                 console.log(params.page() * params.count());
+
+                 $defer.resolve($scope.users = data.slice(
+                 (params.page() - 1) * params.count(),
+                 params.page() * params.count())
+                 );
+                 }*/
+                getData: function ($defer) {
+                    $defer.resolve(data);
+                }
+
+            });
+
+            $scope.jobs = function (jenkins) {
+                $http({
+                    method: 'GET',
+                    url: 'http://127.0.0.1:3000/jenkinses/' + jenkins._id + '/jobs'
+                }).success(function (data, status, headers, config) {
+                    jenkins.jobs = data;
+                }).error(function (data, status, headers, config) {
+                });
+            };
+
+            $scope.job_enable = function (jenkins, jobName) {
+                $http({
+                    method: 'GET',
+                    url: 'http://127.0.0.1:3000/jenkinses/jobs/' + jenkins._id + '/' + jobName + '/enable'
+                })
+            };
+
+            $scope.job_disable = function (jenkins, jobName) {
+                $http({
+                    method: 'GET',
+                    url: 'http://127.0.0.1:3000/jenkinses/jobs/' + jenkins._id + '/' + jobName + '/disable'
+                })
+            };
+
+            $scope.job_delete = function (jenkins, jobName) {
+                $http({
+                    method: 'GET',
+                    url: 'http://127.0.0.1:3000/jenkinses/jobs/' + jenkins._id + '/' + jobName + '/delete'
+                })
+            };
+        }]);

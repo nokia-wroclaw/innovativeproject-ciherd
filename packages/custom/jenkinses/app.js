@@ -25,10 +25,14 @@ Jenkinses.register(function (app, auth, database) {
     });
     Jenkinses.menus.add({
         'roles': ['authenticated'],
+        'title': 'List of Jobs',
+        'link': 'all jenkinses jobs'
+    });
+    Jenkinses.menus.add({
+        'roles': ['authenticated'],
         'title': 'Add new jenkins',
         'link': 'create jenkinses'
     });
-
 
     Jenkinses.aggregateAsset('css', 'jenkinses.css');
 

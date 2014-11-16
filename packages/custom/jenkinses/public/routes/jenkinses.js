@@ -32,6 +32,13 @@ angular.module('mean.jenkinses').config(['$stateProvider',
                     loggedin: checkLoggedin
                 }
             })
+            .state('all jenkinses jobs', {
+                url: '/jenkinses/jobs',
+                templateUrl: 'jenkinses/views/jobList.html',
+                resolve: {
+                    loggedin: checkLoggedin
+                }
+            })
             .state('create jenkinses', {
                 url: '/jenkinses/create',
                 templateUrl: 'jenkinses/views/create.html',
@@ -56,6 +63,13 @@ angular.module('mean.jenkinses').config(['$stateProvider',
             .state('remove jenkins', {
                 url: '/jenkinses/:jenkinsId/remove',
                 templateUrl: 'jenkinses/views/remove.html',
+                resolve: {
+                    loggedin: checkLoggedin
+                }
+            })
+            .state('jenkins job', {
+                url: '/jenkinses/:jenkinsId/job',
+                templateUrl: 'jenkinses/views/job.html',
                 resolve: {
                     loggedin: checkLoggedin
                 }
