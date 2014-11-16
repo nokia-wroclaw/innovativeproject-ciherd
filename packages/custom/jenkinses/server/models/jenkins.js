@@ -38,7 +38,12 @@ var JenkinsSchema = new Schema({
     LatestBuildStatus: {
         Status: Number,
         timestamp: Date
-    }
+    },
+    jobs: [{
+        name: String,
+        url: String,
+        color: String
+    }]
 });
 
 /**

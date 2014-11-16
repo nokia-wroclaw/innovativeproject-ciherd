@@ -7,6 +7,7 @@ var mongoose = require('mongoose'),
     Jenkins = mongoose.model('Jenkins'),
     _ = require('lodash');
 
+var jenkinsapi = require('jenkins-api');
 
 /**
  * Find jenkins by id
@@ -117,4 +118,71 @@ exports.status = function (req, res) {
     });
 
     res.json(jenkins.Online);
+};
+
+exports.jobs = function (req, res) {
+    // #TODO verify that url contains jenkins server
+    var jenkins = req.jenkins;
+    var api = jenkinsapi.init(req.jenkins.url);
+    api.all_jobs(function (err, data) {
+        if (err) {
+            return console.log(err);
+        }
+        jenkins.jobs = data;
+        jenkins = _.extend(jenkins, jenkins);
+        jenkins.save();
+    });
+};
+
+exports.job_info = function (req, res) {
+    var jenkins = req.jenkins;
+    var api = jenkinsapi.init(req.jenkins.url);
+    api.job_info('TEST', function (err, data) {
+        if (err) {
+            return console.log(err);
+        }
+        jenkins.jobs = data;
+        jenkins = _.extend(jenkins, jenkins);
+        jenkins.save();
+    });
+};
+
+exports.job_enable = function (req, res) {
+    var api = jenkinsapi.init(req.jenkins.url);
+    api.enable_job(req.params.jobName, function (err, data) {
+        if (err) {
+            return console.log(err);
+        }
+        console.log(data)
+    });
+};
+
+exports.job_disable = function (req, res) {
+    var api = jenkinsapi.init(req.jenkins.url);
+    api.disable_job(req.params.jobName, function (err, data) {
+        if (err) {
+            return console.log(err);
+        }
+        console.log(data)
+    });
+};
+
+exports.job_delete = function (req, res) {
+    var api = jenkinsapi.init(req.jenkins.url);
+    api.delete_job(req.params.jobName, function (err, data) {
+        if (err) {
+            return console.log(err);
+        }
+        console.log(data)
+    });
+};
+
+exports.job_build = function (req, res) {
+    var api = jenkinsapi.init(req.jenkins.url);
+    api.build(req.params.jobName, function (err, data) {
+        if (err) {
+            return console.log(err);
+        }
+        console.log(data)
+    });
 };
