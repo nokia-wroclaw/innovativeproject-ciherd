@@ -1,3 +1,11 @@
 .jenkinses-example h1 {
-  background-color: purple
+    background-color: purple
+}
+
+.status-online {
+    color: green;
+}
+
+.status-offline {
+    color: red;
 }

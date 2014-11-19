@@ -5,8 +5,7 @@ angular.module('mean.theme')
 	  function($scope, Global, $location, $rootScope) {
 	 		$rootScope.$on('$stateChangeStart',
       	function(event, toState, toParams, fromState, fromParams){
-					var toPath = toState.url.replace('/','');
-        	$scope.state = toPath;
+			$scope.state = toState.url.replace('/', '');
         	if($scope.state === '' ) {
           	$scope.state = 'firstPage';
         	}
