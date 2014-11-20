@@ -22,14 +22,14 @@
             </td>
 
             <td data-title="'Connection Status'" style="text-align: center">
-                <span ng-if="jenkins.Online" class="status-online">
+                <span ng-if="jenkins.ConnectionStatus.Online" class="status-online">
                     Online
                     <button ng-click="connectionStatus(jenkins)">
                         <i class="glyphicon glyphicon-refresh"></i>
                     </button>
                 </span>
 
-                <span ng-if="!jenkins.Online" class="status-offline">
+                <span ng-if="!jenkins.ConnectionStatus.Online" class="status-offline">
                     Offline
                     <button ng-click="connectionStatus(jenkins)">
                         <i class="glyphicon glyphicon-refresh"></i>
@@ -50,7 +50,7 @@
                 <a class="btn" href="#!/jenkinses/{{jenkins._id}}/restart" title="Restart Jenkins">
                     <i class="glyphicon glyphicon-repeat"></i>
                 </a>
-                <a class="btn" href="#!/jenkinses/{{jenkins._id}}/restart" title="Show XML Config">
+                <a class="btn" href="#!/jenkinses/{{jenkins._id}}/#" title="Show XML Config">
                     <i class="glyphicon glyphicon-cog"></i>
                 </a>
             </td>

@@ -5,7 +5,7 @@ var jenkinses = require('../controllers/jenkinses');
 // Jenkins authorization helpers
 
 module.exports = function (Jenkinses, app, auth) {
-
+    // TODO add auth.requiresLogin to all entries
     app.route('/jenkinses')
         .get(jenkinses.all)
         .post(auth.requiresLogin, jenkinses.create);
@@ -23,6 +23,9 @@ module.exports = function (Jenkinses, app, auth) {
 
     app.route('/jenkinses/:jenkinsId/jobs')
         .get(jenkinses.jobs);
+
+    app.route('/jenkinses/:jenkinsId/plugins')
+        .get(jenkinses.plugins);
 
     app.route('/jenkinses/jobs/:jenkinsId/:jobName/enable')
         .get(jenkinses.job_enable);

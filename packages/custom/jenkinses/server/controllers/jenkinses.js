@@ -5,9 +5,10 @@
  */
 var mongoose = require('mongoose'),
     Jenkins = mongoose.model('Jenkins'),
-    _ = require('lodash');
+    _ = require('lodash'),
+    jenkinsAPI = require('jenkins-api'),
+    request = require('request');
 
-var jenkinsapi = require('jenkins-api');
 
 /**
  * Find jenkins by id
@@ -95,46 +96,27 @@ exports.all = function (req, res) {
  */
 
 exports.status = function (req, res) {
-    var http = require('http');
     var jenkins = req.jenkins;
+    var url = jenkins.url;
 
-    /*var request = require('request');
-
-     request(jenkins.url, function (error, response, body) {
-     if (!error && response.statusCode == 200) {
-     jenkins.Online = true;
-     } else {
-
-     jenkins.Online = false;
-     }
-     });
-     */
-    http.get(jenkins.url, function (res) {
-        console.log('Got response: ' + res.statusCode);
-        var jenkins = req.jenkins;
-
-        if (res.statusCode === 200) {
+    request(url, res, function (error, response) {
+        if (!error && response.statusCode === 200) {
             console.log('Zmień na online');
-            jenkins.Online = true;
+            jenkins.ConnectionStatus = {Online: true, timestamp: Date.now()};
         } else {
             console.log('Zmień na offline');
-            jenkins.Online = false;
+            jenkins.ConnectionStatus = {Online: false, timestamp: Date.now()};
         }
-
-        jenkins = _.extend(jenkins, jenkins);
         jenkins.save();
-
-    }).on('error', function (e) {
-        console.log('Got error: ' + e.message);
+        console.log(jenkins.ConnectionStatus.Online);
+        res.json(jenkins.ConnectionStatus.Online);
     });
-
-    res.json(jenkins.Online);
 };
 
 exports.jobs = function (req, res) {
     // #TODO verify that url contains jenkins server
     var jenkins = req.jenkins;
-    var api = jenkinsapi.init(req.jenkins.url);
+    var api = jenkinsAPI.init(req.jenkins.url);
     api.all_jobs(function (err, data) {
         if (err) {
             return console.log(err);
@@ -147,7 +129,7 @@ exports.jobs = function (req, res) {
 
 exports.job_info = function (req, res) {
     var jenkins = req.jenkins;
-    var api = jenkinsapi.init(req.jenkins.url);
+    var api = jenkinsAPI.init(req.jenkins.url);
     api.job_info('TEST', function (err, data) {
         if (err) {
             return console.log(err);
@@ -159,7 +141,7 @@ exports.job_info = function (req, res) {
 };
 
 exports.job_enable = function (req, res) {
-    var api = jenkinsapi.init(req.jenkins.url);
+    var api = jenkinsAPI.init(req.jenkins.url);
     api.enable_job(req.params.jobName, function (err, data) {
         if (err) {
             return console.log(err);
@@ -169,7 +151,7 @@ exports.job_enable = function (req, res) {
 };
 
 exports.job_disable = function (req, res) {
-    var api = jenkinsapi.init(req.jenkins.url);
+    var api = jenkinsAPI.init(req.jenkins.url);
     api.disable_job(req.params.jobName, function (err, data) {
         if (err) {
             return console.log(err);
@@ -179,7 +161,7 @@ exports.job_disable = function (req, res) {
 };
 
 exports.job_delete = function (req, res) {
-    var api = jenkinsapi.init(req.jenkins.url);
+    var api = jenkinsAPI.init(req.jenkins.url);
     api.delete_job(req.params.jobName, function (err, data) {
         if (err) {
             return console.log(err);
@@ -189,11 +171,29 @@ exports.job_delete = function (req, res) {
 };
 
 exports.job_build = function (req, res) {
-    var api = jenkinsapi.init(req.jenkins.url);
+    var api = jenkinsAPI.init(req.jenkins.url);
     api.build(req.params.jobName, function (err, data) {
         if (err) {
             return console.log(err);
         }
         console.log(data);
+    });
+};
+
+
+exports.plugins = function (req, res) {
+    var jenkins = req.jenkins;
+    var url = jenkins.url;
+
+    console.log('URL: ' + url);
+    url += '/pluginManager/api/json?depth=4';
+
+    request(url, res, function (error, response, body) {
+        if (!error && response.statusCode === 200) {
+            jenkins.plugins = JSON.parse(body).plugins;
+            jenkins = _.extend(jenkins, jenkins);
+            jenkins.save();
+            res.send(JSON.parse(body).plugins);
+        }
     });
 };
