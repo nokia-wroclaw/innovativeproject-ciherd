@@ -1,4 +1,6 @@
 <section data-ng-controller="JenkinsesController">
+    <h1>Add new Jenkins</h1>
+
     <form name="jenkinsForm" class="form-horizontal col-md-6" role="form" data-ng-submit="create(jenkinsForm.$valid)"
           novalidate>
         <div class="form-group" ng-class="{ 'has-error' : submitted && jenkinsForm.url.$invalid }">
@@ -24,32 +26,37 @@
                 <div ng-show="submitted && jenkinsForm.url.$invalid" class="help-block">
                     <p ng-show="jenkinsForm.url.$error.required">URL is required</p>
                 </div>
+
+                <div ng-show="submitted && !!jenkinsForm.$error.url" class="help-block">
+                    <p ng-show="!!jenkinsForm.$error.url">URL should start with http://</p>
+                </div>
+
             </div>
         </div>
 
-        <div class="form-group" ng-class="{ 'has-error' : submitted && jenkinsForm.url.$invalid }">
+        <div class="form-group">
+            <label mean-token="'create-url'" class="col-md-3 control-label">Enable Auth</label>
+
+            <div class="col-md-9">
+                <input type="checkbox" ng-model="enableAuth" class="auth-button">
+            </div>
+        </div>
+
+        <div class="form-group" ng-show="enableAuth">
             <label mean-token="'create-url'" class="col-md-3 control-label">User ID</label>
 
             <div class="col-md-9">
                 <input name="UserID" type="text" class="form-control" data-ng-model="UserID" id="UserID"
-                       placeholder="UserID" required>
-
-                <div ng-show="submitted && jenkinsForm.UserID.$invalid" class="help-block">
-                    <p ng-show="jenkinsForm.UserID.$error.required">User ID is required</p>
-                </div>
+                       placeholder="UserID">
             </div>
         </div>
 
-        <div class="form-group" ng-class="{ 'has-error' : submitted && jenkinsForm.url.$invalid }">
+        <div class="form-group" ng-show="enableAuth">
             <label mean-token="'create-url'" class="col-md-3 control-label">API Token</label>
 
             <div class="col-md-9">
                 <input name="APIToken" type="text" class="form-control" data-ng-model="APIToken" id="APIToken"
-                       placeholder="APIToken" required>
-
-                <div ng-show="submitted && jenkinsForm.APIToken.$invalid" class="help-block">
-                    <p ng-show="jenkinsForm.APIToken.$error.required">API Token is required</p>
-                </div>
+                       placeholder="APIToken">
             </div>
         </div>
 

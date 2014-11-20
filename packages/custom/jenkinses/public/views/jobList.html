@@ -7,17 +7,17 @@
                 <a href="" ng-click="jenkins.$hideRows = !jenkins.$hideRows">
                     <span class="glyphicon"
                           ng-class="{ 'glyphicon-chevron-right': jenkins.$hideRows, 'glyphicon-chevron-down': !jenkins.$hideRows }"></span>
-                    <strong>Jenkins:<a href="{{jenkins.url}}">{{ jenkins.description }}</a></strong>
+                    <strong><a href="{{jenkins.url}}">Jenkins: {{ jenkins.description }}</a></strong>
                 </a>
             </td>
         </tr>
 
         <tr ng-hide="jenkins.$hideRows" ng-repeat="job in jenkins.jobs">
-            <!--<td width="30" style="text-align: left" header="'ng-table/headers/checkbox.html'">-->
-            <!--<label>-->
-            <!--<input type="checkbox" ng-model="checkboxes.items[jenkins._id]"/>-->
-            <!--</label>-->
-            <!--</td>-->
+            <td width="30" style="text-align: left" header="'ng-table/headers/checkbox.html'">
+            <label>
+            <input type="checkbox" ng-model="checkboxes.items[jenkins._id]"/>
+            </label>
+            </td>
             <td sortable="color" data-title="'Color'">
                 <span ng-if="job.color == 'blue'" title="Success">
                     <img src="jenkinses/assets/img/blue.png">

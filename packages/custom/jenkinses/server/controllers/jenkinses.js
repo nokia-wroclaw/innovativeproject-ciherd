@@ -98,6 +98,17 @@ exports.status = function (req, res) {
     var http = require('http');
     var jenkins = req.jenkins;
 
+    /*var request = require('request');
+
+     request(jenkins.url, function (error, response, body) {
+     if (!error && response.statusCode == 200) {
+     jenkins.Online = true;
+     } else {
+
+     jenkins.Online = false;
+     }
+     });
+     */
     http.get(jenkins.url, function (res) {
         console.log('Got response: ' + res.statusCode);
         var jenkins = req.jenkins;
@@ -153,7 +164,7 @@ exports.job_enable = function (req, res) {
         if (err) {
             return console.log(err);
         }
-        console.log(data)
+        console.log(data);
     });
 };
 
@@ -163,7 +174,7 @@ exports.job_disable = function (req, res) {
         if (err) {
             return console.log(err);
         }
-        console.log(data)
+        console.log(data);
     });
 };
 
@@ -173,7 +184,7 @@ exports.job_delete = function (req, res) {
         if (err) {
             return console.log(err);
         }
-        console.log(data)
+        console.log(data);
     });
 };
 
@@ -183,6 +194,6 @@ exports.job_build = function (req, res) {
         if (err) {
             return console.log(err);
         }
-        console.log(data)
+        console.log(data);
     });
 };

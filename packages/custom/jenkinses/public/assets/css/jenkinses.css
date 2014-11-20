@@ -9,3 +9,7 @@
 .status-offline {
     color: red;
 }
+
+.auth-button {
+    vertical-align: middle;
+}
