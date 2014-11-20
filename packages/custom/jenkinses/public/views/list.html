@@ -1,18 +1,9 @@
 <section data-ng-controller="JenkinsesListController">
 
-    <!--
         {{checkboxes.items}}
-    -->
 
     <table ng-table="tableParams" class="table">
         <tr ng-repeat="jenkins in $data">
-            <!--
-                        <td data-title="'_id'">{{jenkins._id}}</td>
-                        <td data-title="'Created'">{{jenkins.created | date: "shortTime"}}</td>
-                        <td data-title="'User ID'">{{jenkins.UserID}}</td>
-                        <td data-title="'API Token'">{{jenkins.APIToken}}</td>
-            -->
-
             <td width="30" style="text-align: left" header="'ng-table/headers/checkbox.html'">
                 <label>
                     <input type="checkbox" ng-model="checkboxes.items[jenkins._id]"/>

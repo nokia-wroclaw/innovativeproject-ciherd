@@ -1,10 +1,13 @@
 'use strict';
 
-angular.module('mean.jenkinses', ['ngTable']).
+angular.module('mean.jenkinses',
+    ['ngTable']).
+
     controller('JenkinsesController',
     ['$scope', '$stateParams', '$location', 'Global', 'Jenkinses',
         function ($scope, $stateParams, $location, Global, Jenkinses) {
             $scope.global = Global;
+            $scope.enableAuth = false;
 
             $scope.create = function (isValid) {
                 if (isValid) {
@@ -13,7 +16,6 @@ angular.module('mean.jenkinses', ['ngTable']).
                         url: this.url,
                         UserID: this.UserID,
                         APIToken: this.APIToken
-
                     });
                     //noinspection JSUnresolvedFunction
                     jenkins.$save(function (response) {
@@ -82,6 +84,7 @@ angular.module('mean.jenkinses', ['ngTable']).
 
         }
     ]).
+
     controller('JenkinsesListController',
     ['$scope', '$filter', '$q', 'ngTableParams', 'Jenkinses', '$http',
         function ($scope, $filter, $q, ngTableParams, Jenkinses, $http) {
@@ -163,6 +166,7 @@ angular.module('mean.jenkinses', ['ngTable']).
 
             };
         }]).
+
     controller('JobListController',
     ['$scope', '$filter', '$q', 'ngTableParams', 'Jenkinses', '$http', '$stateParams',
         function ($scope, $filter, $q, ngTableParams, Jenkinses, $http) {
@@ -176,6 +180,7 @@ angular.module('mean.jenkinses', ['ngTable']).
                 });
             };
 
+            /*jshint -W055 */
             $scope.tableParams = new ngTableParams({
                 page: 1,            // show first page
                 count: 10           // count per page
@@ -234,4 +239,5 @@ angular.module('mean.jenkinses', ['ngTable']).
                     url: 'http://127.0.0.1:3000/jenkinses/jobs/' + jenkins._id + '/' + jobName + '/build'
                 });
             };
-        }]);
+        }])
+;

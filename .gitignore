@@ -53,3 +53,10 @@ test/coverage/
 modules/public/
 modules/views/
 /public/build/
+
+# --------------------
+# LaTex output
+# --------------------
+*.aux
+*.synctex.gz
+*.log

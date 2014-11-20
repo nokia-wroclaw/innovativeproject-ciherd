@@ -35,14 +35,22 @@ var JenkinsSchema = new Schema({
         Online: Boolean,
         timestamp: Date
     },
-    LatestBuildStatus: {
-        Status: Number,
-        timestamp: Date
-    },
     jobs: [{
         name: String,
         url: String,
         color: String
+    }],
+    plugins: [{
+        longName: String,
+        shortName: String,
+        url: String,
+        version: String,
+        active: Boolean,
+        bundled: Boolean,
+        deleted: Boolean,
+        downgradable: Boolean,
+        enabled: Boolean,
+        hasUpdate: Boolean
     }]
 });
 
