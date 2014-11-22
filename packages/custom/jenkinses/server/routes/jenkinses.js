@@ -6,6 +6,13 @@ var jenkinses = require('../controllers/jenkinses');
 
 module.exports = function (Jenkinses, app, auth) {
     // TODO add auth.requiresLogin to all entries
+
+    app.route('/api/:jenkinsId/jobs')
+        .get(jenkinses.jobsAPI);
+
+    app.route('/api/:jenkinsId/plugins')
+        .get(jenkinses.pluginsAPI);
+
     app.route('/jenkinses')
         .get(jenkinses.all)
         .post(auth.requiresLogin, jenkinses.create);

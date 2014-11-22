@@ -1,5 +1,4 @@
-<section data-ng-controller="PluginListController">
-
+<section data-ng-controller="PluginListController" >
 
     {{checkboxes.items}}
 
@@ -9,7 +8,7 @@
                 <input type="checkbox" ng-model="checkboxes.items[user.id]" />
             </td>
             <td data-title="'Long name'">
-                <a href="{{user.url}}">{{user.longName}}</a>
+                {{user.longName}} <a href="{{user.url}}">[wiki]</a>
             </td>
             <td data-title="'Version'">
                 {{user.version}}

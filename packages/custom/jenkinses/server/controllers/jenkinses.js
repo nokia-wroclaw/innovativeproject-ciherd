@@ -197,3 +197,22 @@ exports.plugins = function (req, res) {
         }
     });
 };
+
+exports.jobsAPI = function (req, res) {
+    /*
+     Jenkins.findById('546c9b0e32a93e5109006f4f', function (err, jenkins) {
+     res.json(jenkins.jobs);
+     })
+     */
+    res.json(req.jenkins.jobs);
+};
+
+exports.pluginsAPI = function (req, res) {
+    /*
+     Jenkins.findById('546c9b0e32a93e5109006f4f', function (err, jenkins) {
+     res.json(jenkins.plugins);
+     })
+     */
+    res.json(req.jenkins.plugins);
+};
+

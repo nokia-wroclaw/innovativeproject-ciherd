@@ -93,7 +93,6 @@ angular.module('mean.jenkinses',
                 $scope.jenkinses = jenkinses;
             });
 
-
             /*jshint -W055 */
             $scope.tableParams = new ngTableParams({
                 page: 1,            // show first page
@@ -102,12 +101,12 @@ angular.module('mean.jenkinses',
                 total: data.length,  // length of data
 
                 getData: function ($defer) {
-                 $defer.resolve(data);
-                 }
+                    $defer.resolve(data);
+                }
 
                 /*getData: function ($defer, params) {
-                    $defer.resolve(data.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-                }*/
+                 $defer.resolve(data.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+                 }*/
 
             });
 
@@ -228,306 +227,31 @@ angular.module('mean.jenkinses',
         }])
 
     .controller('PluginListController',
-    ['$scope', '$stateParams', '$filter', '$q', 'ngTableParams', 'Jenkinses',
-        function ($scope, $stateParams, $filter, $q, ngTableParams, Jenkinses) {
-	    
-            /*jshint quotmark: double */
-            var x = {
-                "_id": "546c9b0e32a93e5109006f4f",
-                "description": "Dzenkins Mateusz",
-                "url": "http://vps1.soltysik.org:8080/",
-                "UserID": "x",
-                "APIToken": "x",
-                "__v": 69,
-                "plugins": [{
-                    "active": true,
-                    "bundled": true,
-                    "deleted": false,
-                    "downgradable": true,
-                    "enabled": true,
-                    "hasUpdate": false,
-                    "longName": "Jenkins Mailer Plugin",
-                    "shortName": "mailer",
-                    "url": "http://wiki.jenkins-ci.org/display/JENKINS/Mailer",
-                    "version": "1.12",
-                    "_id": "546e7235659e0ccb24545d6e"
-                }, {
-                    "active": true,
-                    "bundled": true,
-                    "deleted": false,
-                    "downgradable": true,
-                    "enabled": true,
-                    "hasUpdate": false,
-                    "longName": "External Monitor Job Type Plugin",
-                    "shortName": "external-monitor-job",
-                    "url": "https://wiki.jenkins-ci.org/display/JENKINS/Monitoring+external+jobs",
-                    "version": "1.4",
-                    "_id": "546e7235659e0ccb24545d6d"
-                }, {
-                    "active": true,
-                    "bundled": true,
-                    "deleted": false,
-                    "downgradable": true,
-                    "enabled": true,
-                    "hasUpdate": false,
-                    "longName": "JUnit Plugin",
-                    "shortName": "junit",
-                    "url": "http://wiki.jenkins-ci.org/display/JENKINS/JUnit+Plugin",
-                    "version": "1.2",
-                    "_id": "546e7235659e0ccb24545d6c"
-                }, {
-                    "active": true,
-                    "bundled": true,
-                    "deleted": false,
-                    "downgradable": true,
-                    "enabled": true,
-                    "hasUpdate": false,
-                    "longName": "SSH Credentials Plugin",
-                    "shortName": "ssh-credentials",
-                    "url": "http://wiki.jenkins-ci.org/display/JENKINS/SSH+Credentials+Plugin",
-                    "version": "1.10",
-                    "_id": "546e7235659e0ccb24545d6b"
-                }, {
-                    "active": true,
-                    "bundled": true,
-                    "deleted": false,
-                    "downgradable": true,
-                    "enabled": true,
-                    "hasUpdate": false,
-                    "longName": "Jenkins Subversion Plug-in",
-                    "shortName": "subversion",
-                    "url": "http://wiki.jenkins-ci.org/display/JENKINS/Subversion+Plugin",
-                    "version": "2.4.5",
-                    "_id": "546e7235659e0ccb24545d6a"
-                }, {
-                    "active": true,
-                    "bundled": true,
-                    "deleted": false,
-                    "downgradable": true,
-                    "enabled": true,
-                    "hasUpdate": false,
-                    "longName": "Credentials Plugin",
-                    "shortName": "credentials",
-                    "url": "http://wiki.jenkins-ci.org/display/JENKINS/Credentials+Plugin",
-                    "version": "1.18",
-                    "_id": "546e7235659e0ccb24545d69"
-                }, {
-                    "active": true,
-                    "bundled": false,
-                    "deleted": false,
-                    "downgradable": true,
-                    "enabled": true,
-                    "hasUpdate": false,
-                    "longName": "Jenkins GIT plugin",
-                    "shortName": "git",
-                    "url": "http://wiki.jenkins-ci.org/display/JENKINS/Git+Plugin",
-                    "version": "2.3",
-                    "_id": "546e7235659e0ccb24545d68"
-                }, {
-                    "active": true,
-                    "bundled": true,
-                    "deleted": false,
-                    "downgradable": true,
-                    "enabled": true,
-                    "hasUpdate": false,
-                    "longName": "Jenkins CVS Plug-in",
-                    "shortName": "cvs",
-                    "url": "http://wiki.jenkins-ci.org/display/JENKINS/CVS+Plugin",
-                    "version": "2.12",
-                    "_id": "546e7235659e0ccb24545d67"
-                }, {
-                    "active": true,
-                    "bundled": true,
-                    "deleted": false,
-                    "downgradable": false,
-                    "enabled": true,
-                    "hasUpdate": false,
-                    "longName": "Ant Plugin",
-                    "shortName": "ant",
-                    "url": "http://wiki.jenkins-ci.org/display/JENKINS/Ant+Plugin",
-                    "version": "1.2",
-                    "_id": "546e7235659e0ccb24545d66"
-                }, {
-                    "active": true,
-                    "bundled": true,
-                    "deleted": false,
-                    "downgradable": true,
-                    "enabled": true,
-                    "hasUpdate": false,
-                    "longName": "Javadoc Plugin",
-                    "shortName": "javadoc",
-                    "url": "http://wiki.jenkins-ci.org/display/JENKINS/Javadoc+Plugin",
-                    "version": "1.3",
-                    "_id": "546e7235659e0ccb24545d65"
-                }, {
-                    "active": true,
-                    "bundled": false,
-                    "deleted": false,
-                    "downgradable": false,
-                    "enabled": true,
-                    "hasUpdate": false,
-                    "longName": "MapDB API Plugin",
-                    "shortName": "mapdb-api",
-                    "url": "http://wiki.jenkins-ci.org/display/JENKINS/MapDB+API+Plugin",
-                    "version": "1.0.6.0",
-                    "_id": "546e7235659e0ccb24545d64"
-                }, {
-                    "active": true,
-                    "bundled": true,
-                    "deleted": false,
-                    "downgradable": false,
-                    "enabled": true,
-                    "hasUpdate": false,
-                    "longName": "Windows Slaves Plugin",
-                    "shortName": "windows-slaves",
-                    "url": "http://wiki.jenkins-ci.org/display/JENKINS/Windows+Slaves+Plugin",
-                    "version": "1.0",
-                    "_id": "546e7235659e0ccb24545d63"
-                }, {
-                    "active": true,
-                    "bundled": true,
-                    "deleted": false,
-                    "downgradable": true,
-                    "enabled": true,
-                    "hasUpdate": false,
-                    "longName": "LDAP Plugin",
-                    "shortName": "ldap",
-                    "url": "http://wiki.jenkins-ci.org/display/JENKINS/LDAP+Plugin",
-                    "version": "1.11",
-                    "_id": "546e7235659e0ccb24545d62"
-                }, {
-                    "active": true,
-                    "bundled": true,
-                    "deleted": false,
-                    "downgradable": true,
-                    "enabled": true,
-                    "hasUpdate": false,
-                    "longName": "Jenkins Translation Assistance plugin",
-                    "shortName": "translation",
-                    "url": "http://wiki.jenkins-ci.org/display/JENKINS/Translation+Assistance+Plugin",
-                    "version": "1.12",
-                    "_id": "546e7235659e0ccb24545d61"
-                }, {
-                    "active": true,
-                    "bundled": true,
-                    "deleted": false,
-                    "downgradable": true,
-                    "enabled": true,
-                    "hasUpdate": false,
-                    "longName": "PAM Authentication plugin",
-                    "shortName": "pam-auth",
-                    "url": "http://wiki.jenkins-ci.org/display/JENKINS/PAM+Authentication+Plugin",
-                    "version": "1.2",
-                    "_id": "546e7235659e0ccb24545d60"
-                }, {
-                    "active": true,
-                    "bundled": false,
-                    "deleted": false,
-                    "downgradable": true,
-                    "enabled": true,
-                    "hasUpdate": false,
-                    "longName": "Jenkins GIT client plugin",
-                    "shortName": "git-client",
-                    "url": "http://wiki.jenkins-ci.org/display/JENKINS/Git+Client+Plugin",
-                    "version": "1.11.1",
-                    "_id": "546e7235659e0ccb24545d5f"
-                }, {
-                    "active": true,
-                    "bundled": false,
-                    "deleted": false,
-                    "downgradable": false,
-                    "enabled": true,
-                    "hasUpdate": false,
-                    "longName": "SCM API Plugin",
-                    "shortName": "scm-api",
-                    "url": "http://wiki.jenkins-ci.org/display/JENKINS/SCM+API+Plugin",
-                    "version": "0.2",
-                    "_id": "546e7235659e0ccb24545d5e"
-                }, {
-                    "active": true,
-                    "bundled": true,
-                    "deleted": false,
-                    "downgradable": true,
-                    "enabled": true,
-                    "hasUpdate": false,
-                    "longName": "Maven Integration plugin",
-                    "shortName": "maven-plugin",
-                    "url": "http://wiki.jenkins-ci.org/display/JENKINS/Maven+Project+Plugin",
-                    "version": "2.7.1",
-                    "_id": "546e7235659e0ccb24545d5d"
-                }, {
-                    "active": true,
-                    "bundled": true,
-                    "deleted": false,
-                    "downgradable": true,
-                    "enabled": true,
-                    "hasUpdate": false,
-                    "longName": "Jenkins SSH Slaves plugin",
-                    "shortName": "ssh-slaves",
-                    "url": "http://wiki.jenkins-ci.org/display/JENKINS/SSH+Slaves+plugin",
-                    "version": "1.9",
-                    "_id": "546e7235659e0ccb24545d5c"
-                }, {
-                    "active": true,
-                    "bundled": true,
-                    "deleted": false,
-                    "downgradable": true,
-                    "enabled": true,
-                    "hasUpdate": false,
-                    "longName": "Matrix Authorization Strategy Plugin",
-                    "shortName": "matrix-auth",
-                    "url": "http://wiki.jenkins-ci.org/display/JENKINS/Matrix+Authorization+Strategy+Plugin",
-                    "version": "1.2",
-                    "_id": "546e7235659e0ccb24545d5b"
-                }, {
-                    "active": true,
-                    "bundled": true,
-                    "deleted": false,
-                    "downgradable": true,
-                    "enabled": true,
-                    "hasUpdate": false,
-                    "longName": "Matrix Project Plugin",
-                    "shortName": "matrix-project",
-                    "url": "https://wiki.jenkins-ci.org/display/JENKINS/Matrix+Project+Plugin",
-                    "version": "1.4",
-                    "_id": "546e7235659e0ccb24545d5a"
-                }, {
-                    "active": true,
-                    "bundled": true,
-                    "deleted": false,
-                    "downgradable": true,
-                    "enabled": true,
-                    "hasUpdate": false,
-                    "longName": "OWASP Markup Formatter Plugin",
-                    "shortName": "antisamy-markup-formatter",
-                    "url": "http://wiki.jenkins-ci.org/display/JENKINS/OWASP+Markup+Formatter+Plugin",
-                    "version": "1.3",
-                    "_id": "546e7235659e0ccb24545d59"
-                }],
-                "jobs": [{
-                    "name": "FirstProject",
-                    "url": "http://vps1.soltysik.org:8080/job/FirstProject/",
-                    "color": "red",
-                    "_id": "546e720770b30e9c2488367b"
-                }, {
-                    "name": "Zjem Cie",
-                    "url": "http://vps1.soltysik.org:8080/job/Zjem%20Cie/",
-                    "color": "blue",
-                    "_id": "546e720770b30e9c2488367a"
-                }],
-                "ConnectionStatus": {"Online": true, "timestamp": "2014-11-20T21:59:36.194Z"},
-                "created": "2014-11-19T13:28:46.337Z"
-            };
-            var data = x.plugins;
+    ['$scope', '$stateParams', 'Jenkinses', 'ngTableParams', '$http',
+        function ($scope, $stateParams, Jenkinses, ngTableParams, $http) {
 
-            /*jshint -W055 */
-            $scope.tableParams = new ngTableParams({
-                page: 1,            // show first page
-                count: 10           // count per page
-            }, {
-                total: data.length, // length of data
-                getData: function ($defer, params) {
-                    $defer.resolve(data.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-                }
-            });
+            $http.get('api/546c9b0e32a93e5109006f4f/plugins').
+                success(function (data, status, headers, config) {
+                    $scope.plugins = data;
+                    console.log(data);
+
+
+                    /*jshint -W055 */
+                    //noinspection JSPotentiallyInvalidConstructorUsage
+                    $scope.tableParams = new ngTableParams({
+                        page: 1,            // show first page
+                        count: 10           // count per page
+                    }, {
+                        total: data.length,  // length of data
+
+                        getData: function ($defer, params) {
+                            $defer.resolve($scope.users = data.slice((params.page() - 1) * params.count(),
+                                    params.page() * params.count())
+                            );
+                        }
+                    });
+                }).
+                error(function (data, status, headers, config) {
+                    // log error
+                });
         }]);
