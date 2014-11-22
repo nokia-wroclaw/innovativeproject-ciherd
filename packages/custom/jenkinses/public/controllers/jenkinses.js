@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('mean.jenkinses',
-    ['ngTable']).
+    ['ngTable'])
 
-    controller('JenkinsesController',
+    .controller('JenkinsesController',
     ['$scope', '$stateParams', '$location', 'Global', 'Jenkinses',
         function ($scope, $stateParams, $location, Global, Jenkinses) {
             $scope.global = Global;
@@ -83,11 +83,12 @@ angular.module('mean.jenkinses',
 
 
         }
-    ]).
+    ])
 
-    controller('JenkinsesListController',
+    .controller('JenkinsesListController',
     ['$scope', '$filter', '$q', 'ngTableParams', 'Jenkinses', '$http',
         function ($scope, $filter, $q, ngTableParams, Jenkinses, $http) {
+
             var data = Jenkinses.query(function (jenkinses) {
                 $scope.jenkinses = jenkinses;
             });
@@ -98,19 +99,14 @@ angular.module('mean.jenkinses',
                 count: 10           // count per page
             }, {
                 total: data.length,  // length of data
-                /*
-                 getData: function ($defer, params) {
-                 console.log((params.page() - 1) * params.count());
-                 console.log(params.page() * params.count());
 
-                 $defer.resolve($scope.users = data.slice(
-                 (params.page() - 1) * params.count(),
-                 params.page() * params.count())
-                 );
-                 }*/
                 getData: function ($defer) {
                     $defer.resolve(data);
                 }
+
+                /*getData: function ($defer, params) {
+                 $defer.resolve(data.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+                 }*/
 
             });
 
@@ -146,28 +142,17 @@ angular.module('mean.jenkinses',
 
 
             $scope.connectionStatus = function (jenkins) {
-                console.log(jenkins._id);
-                //$.get("http://127.0.0.1:3000/jenkinses/" + jenkins._id + "/status");
                 $http({
                     method: 'GET',
                     url: 'http://127.0.0.1:3000/jenkinses/' + jenkins._id + '/status'
-                }).success(function (data, status, headers, config) {
-                    console.log(data);
-                    jenkins.isOnline = data;
-                    // data contains the response
-                    // status is the HTTP status
-                    // headers is the header getter function
-                    // config is the object that was used to create the HTTP request
-                }).error(function (data, status, headers, config) {
+                }).success(function (data) {
+                    jenkins.ConnectionStatus.Online = data;
                 });
             };
 
-            $scope.latestBuildStatus = function (jenkins) {
+        }])
 
-            };
-        }]).
-
-    controller('JobListController',
+    .controller('JobListController',
     ['$scope', '$filter', '$q', 'ngTableParams', 'Jenkinses', '$http', '$stateParams',
         function ($scope, $filter, $q, ngTableParams, Jenkinses, $http) {
             var data = Jenkinses.query(function (jenkinses) {
@@ -240,4 +225,33 @@ angular.module('mean.jenkinses',
                 });
             };
         }])
-;
+
+    .controller('PluginListController',
+    ['$scope', '$stateParams', 'Jenkinses', 'ngTableParams', '$http',
+        function ($scope, $stateParams, Jenkinses, ngTableParams, $http) {
+
+            $http.get('api/546c9b0e32a93e5109006f4f/plugins').
+                success(function (data, status, headers, config) {
+                    $scope.plugins = data;
+                    console.log(data);
+
+
+                    /*jshint -W055 */
+                    //noinspection JSPotentiallyInvalidConstructorUsage
+                    $scope.tableParams = new ngTableParams({
+                        page: 1,            // show first page
+                        count: 10           // count per page
+                    }, {
+                        total: data.length,  // length of data
+
+                        getData: function ($defer, params) {
+                            $defer.resolve($scope.users = data.slice((params.page() - 1) * params.count(),
+                                    params.page() * params.count())
+                            );
+                        }
+                    });
+                }).
+                error(function (data, status, headers, config) {
+                    // log error
+                });
+        }]);

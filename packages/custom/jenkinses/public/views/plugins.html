@@ -1,0 +1,42 @@
+<section data-ng-controller="PluginListController" >
+
+    {{checkboxes.items}}
+
+    <table ng-table="tableParams" class="table">
+        <tr ng-repeat="user in $data" ng-class="{ 'emphasis': user.money > 500 }">
+            <td width="30" style="text-align: left" header="'ng-table/headers/checkbox.html'">
+                <input type="checkbox" ng-model="checkboxes.items[user.id]" />
+            </td>
+            <td data-title="'Long name'">
+                {{user.longName}} <a href="{{user.url}}">[wiki]</a>
+            </td>
+            <td data-title="'Version'">
+                {{user.version}}
+            </td>
+            <td data-title="'Active'">
+                {{user.active}}
+            </td>
+            <td data-title="'Bundled'">
+                {{user.bundled}}
+            </td>
+            <td data-title="'Deleted'">
+                {{user.deleted}}
+            </td>
+            <td data-title="'Downgradable'">
+                {{user.downgradable}}
+            </td>
+            <td data-title="'Enabled'">
+                {{user.enabled}}
+            </td>
+            <td data-title="'Has update'">
+                {{user.hasUpdate}}
+            </td>
+        </tr>
+    </table>
+    <script type="text/ng-template" id="ng-table/headers/checkbox.html">
+        <input type="checkbox" ng-model="checkboxes.checked" id="select_all" name="filter-checkbox" value="" />
+    </script>
+
+
+
+</section>

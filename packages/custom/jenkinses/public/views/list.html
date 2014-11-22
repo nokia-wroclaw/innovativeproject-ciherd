@@ -11,25 +11,16 @@
             </td>
             <td data-title="'Description'">{{jenkins.description}}</td>
             <td data-title="'URL'"><a href="{{jenkins.url}}">{{jenkins.url}}</a></td>
-            <td data-title="'Latest Build Status'" style="text-align: center">
-                <span class="status-online">
-                    Passed
-                    <button ng-click="latestBuildStatus(jenkins)">
-                    <i class="glyphicon glyphicon-refresh"></i>
-                </button>
-
-                </span>
-            </td>
 
             <td data-title="'Connection Status'" style="text-align: center">
-                <span ng-if="jenkins.Online" class="status-online">
+                <span ng-if="jenkins.ConnectionStatus.Online" class="status-online">
                     Online
                     <button ng-click="connectionStatus(jenkins)">
                         <i class="glyphicon glyphicon-refresh"></i>
                     </button>
                 </span>
 
-                <span ng-if="!jenkins.Online" class="status-offline">
+                <span ng-if="!jenkins.ConnectionStatus.Online" class="status-offline">
                     Offline
                     <button ng-click="connectionStatus(jenkins)">
                         <i class="glyphicon glyphicon-refresh"></i>
@@ -47,10 +38,13 @@
                 <a class="btn" href="#!/jenkinses/{{jenkins._id}}/remove" title="Remove Jenkins">
                     <i class="glyphicon glyphicon-trash"></i>
                 </a>
+                <a class="btn" href="#!/jenkinses/{{jenkins._id}}/plugins" title="Plugins of Jenkins">
+                    <i class="glyphicon glyphicon-wrench"></i>
+                </a>
                 <a class="btn" href="#!/jenkinses/{{jenkins._id}}/restart" title="Restart Jenkins">
                     <i class="glyphicon glyphicon-repeat"></i>
                 </a>
-                <a class="btn" href="#!/jenkinses/{{jenkins._id}}/restart" title="Show XML Config">
+                <a class="btn" href="#!/jenkinses/{{jenkins._id}}/#" title="Show XML Config">
                     <i class="glyphicon glyphicon-cog"></i>
                 </a>
             </td>
