@@ -243,7 +243,7 @@ angular.module('mean.jenkinses',
     ['$scope', '$stateParams', 'Jenkinses', 'ngTableParams', '$http',
         function ($scope, $stateParams, Jenkinses, ngTableParams, $http) {
 
-            $http.get('api/546c9b0e32a93e5109006f4f/plugins').
+            $http.get('api/' + $stateParams.jenkinsId + '/plugins').
                 success(function (data, status, headers, config) {
                     $scope.plugins = data;
                     console.log(data);

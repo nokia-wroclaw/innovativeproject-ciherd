@@ -1,42 +1,73 @@
-<section data-ng-controller="PluginListController" >
-
+<section data-ng-controller="PluginListController">
+    <h1>List of Plugins
+        <a href="#" title="Refresh plugins list">
+            <button type="button" class="btn btn-primary">
+                <i class="glyphicon glyphicon-refresh"></i>
+            </button>
+        </a>
+    </h1>
     {{checkboxes.items}}
 
     <table ng-table="tableParams" class="table">
-        <tr ng-repeat="user in $data" ng-class="{ 'emphasis': user.money > 500 }">
+        <tr ng-repeat="plugin in $data">
             <td width="30" style="text-align: left" header="'ng-table/headers/checkbox.html'">
-                <input type="checkbox" ng-model="checkboxes.items[user.id]" />
+                <input type="checkbox" ng-model="checkboxes.items[plugin.id]"/>
             </td>
             <td data-title="'Long name'">
-                {{user.longName}} <a href="{{user.url}}">[wiki]</a>
+                {{plugin.longName}} <a href="{{plugin.url}}">[wiki]</a>
             </td>
             <td data-title="'Version'">
-                {{user.version}}
+                {{plugin.version}}
             </td>
             <td data-title="'Active'">
-                {{user.active}}
+                {{plugin.active}}
             </td>
             <td data-title="'Bundled'">
-                {{user.bundled}}
+                {{plugin.bundled}}
             </td>
             <td data-title="'Deleted'">
-                {{user.deleted}}
+                {{plugin.deleted}}
             </td>
             <td data-title="'Downgradable'">
-                {{user.downgradable}}
+                {{plugin.downgradable}}
             </td>
             <td data-title="'Enabled'">
-                {{user.enabled}}
+                {{plugin.enabled}}
             </td>
             <td data-title="'Has update'">
-                {{user.hasUpdate}}
+                {{plugin.hasUpdate}}
+            </td>
+
+            <td data-title="'Actions'" style="text-align: right">
+
+                <div class="btn-group" style="text-align: left" dropdown is-open="status.isopen">
+                    <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle
+                            ng-disabled="disabled">
+                        <i class="glyphicon glyphicon-wrench"></i> <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li ng-if="!plugin.active"><a href ng-click="#">Activate</a></li>
+                        <li ng-if="plugin.active"><a href ng-click="#">Deactivate</a></li>
+
+                        <li ng-if="!plugin.deleted"><a href ng-click="#">Delete</a></li>
+                        <li ng-if="plugin.deleted"><a href ng-click="#">Undo delete</a></li>
+
+                        <li ng-if="!plugin.downgradable"><a href ng-click="#">Downgrade</a></li>
+                        <li ng-if="plugin.downgradable"><a href ng-click="#">Undo downgrade</a></li>
+
+                        <li ng-if="!plugin.enabled"><a href ng-click="#">Enable</a></li>
+                        <li ng-if="plugin.enabled"><a href ng-click="#">Disable</a></li>
+
+                        <li ng-if="plugin.hasUpdate"><a href ng-click="#">Update</a></li>
+
+                    </ul>
+                </div>
             </td>
         </tr>
     </table>
     <script type="text/ng-template" id="ng-table/headers/checkbox.html">
-        <input type="checkbox" ng-model="checkboxes.checked" id="select_all" name="filter-checkbox" value="" />
+        <input type="checkbox" ng-model="checkboxes.checked" id="select_all" name="filter-checkbox" value=""/>
     </script>
-
 
 
 </section>
