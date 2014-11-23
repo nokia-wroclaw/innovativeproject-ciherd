@@ -150,6 +150,19 @@ angular.module('mean.jenkinses',
                 });
             };
 
+          $scope.hardRestart = function (jenkins) {
+                $http({
+                    method: 'POST',
+                    url: jenkins.url +'/restart'
+                });
+                console.log('reset jenkins');
+            };
+            $scope.softRestart = function (jenkins) {
+                $http({
+                    method: 'POST',
+                    url: jenkins.url +'/safeRestart'
+                });
+            };
         }])
 
     .controller('JobListController',

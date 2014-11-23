@@ -30,7 +30,8 @@ module.exports = function (Jenkinses, app, auth) {
 
     app.route('/jenkinses/:jenkinsId/jobs')
         .get(jenkinses.jobs);
-
+/*    app.route('/jenkinses/:jenkinsId/restart')
+        .get(jenkinses.restart);*/
     app.route('/jenkinses/:jenkinsId/plugins')
         .get(jenkinses.plugins);
 

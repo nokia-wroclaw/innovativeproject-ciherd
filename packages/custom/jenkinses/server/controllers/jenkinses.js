@@ -90,7 +90,21 @@ exports.all = function (req, res) {
     });
 };
 
+/*exports.restart = function (req, res) {
+    var jenkins = req.jenkins;
+    var url = jenkins.url;
+    var resurl = url + '/restart'
+    request.post(resurl, res, function (error, response) {
+        if (!error && response.statusCode === 200) {
 
+        } else {
+            console.log('problems with restart');
+            
+        }
+        console.log("restart jenkins" );
+        res.json(jenkins.ConnectionStatus.Online);
+    });
+};*/
 /**
  * Check connection to selected website
  */

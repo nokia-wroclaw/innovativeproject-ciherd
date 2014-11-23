@@ -53,6 +53,13 @@ angular.module('mean.jenkinses').config(['$stateProvider',
                     loggedin: checkLoggedin
                 }
             })
+            .state('restart jenkins', {
+                url: '/jenkinses/:jenkinsId/restart',
+                templateUrl: 'jenkinses/views/restart.html',
+                resolve: {
+                    loggedin: checkLoggedin
+                }
+            })            
             .state('plugins of jenkins', {
                 url: '/jenkinses/:jenkinsId/plugins',
                 templateUrl: 'jenkinses/views/plugins.html',

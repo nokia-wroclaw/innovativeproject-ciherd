@@ -1,0 +1,30 @@
+            
+<section data-ng-controller="JenkinsesListController">
+
+            <td data-title="'Actions'" style="text-align: right">
+
+               <button type="button" class="btn btn-primary dropdown-toggle" href="#!/jenkinses/{{jenkins._id}}" title="View Jenkins">
+                    <i class="glyphicon glyphicon-eye-open"></i>
+                </button>
+                <a class="btn" href="#!/jenkinses/{{jenkins._id}}/edit" title="Edit Jenkins">
+                    <i class="glyphicon glyphicon-pencil"></i>
+                </a>
+                <a class="btn" href="#!/jenkinses/{{jenkins._id}}/remove" title="Remove Jenkins">
+                    <i class="glyphicon glyphicon-trash"></i>
+                </a>
+                <a class="btn" href="#!/jenkinses/{{jenkins._id}}/plugins" title="Plugins of Jenkins">
+                    <i class="glyphicon glyphicon-wrench"></i>
+                </a>
+
+    <div class="btn-group" style="text-align: left" dropdown is-open="status.isopen">
+      <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle ng-disabled="disabled">
+        <i class="glyphicon glyphicon-repeat"></i> <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" role="menu">
+        <li><a href ng-click="hardRestart(jenkins)">Restart</a></li>
+        <li><a href ng-click="softRestart(jenkins)"> SoftRestart</a></li>
+
+      </ul>
+    </div>
+    </td>
+    </section>

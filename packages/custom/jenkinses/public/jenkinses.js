@@ -1,3 +1,3 @@
 'use strict';
 
-angular.module('mean.jenkinses', []);
+angular.module('mean.jenkinses', ['ui.bootstrap']);
