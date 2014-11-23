@@ -1,6 +1,12 @@
 <section data-ng-controller="JenkinsesListController">
-
-        {{checkboxes.items}}
+    <h1>List of Jenkinses
+        <a href="#" title="Refresh plugins list">
+            <button type="button" class="btn btn-primary">
+                <i class="glyphicon glyphicon-refresh"></i>
+            </button>
+        </a>
+    </h1>
+    <!--{{checkboxes.items}}-->
 
     <table ng-table="tableParams" class="table">
         <tr ng-repeat="jenkins in $data">
@@ -44,22 +50,24 @@
                         <i class="glyphicon glyphicon-trash"></i>
                     </button>
                 </a>
+
                 <a href="#!/jenkinses/{{jenkins._id}}/plugins" title="Plugins of Jenkins" class="no-decoration">
                     <button type="button" class="btn btn-primary">
-                        <i class="glyphicon glyphicon-wrench"></i>
+                        <i class="glyphicon glyphicon-flash"></i>
                     </button>
                 </a>
 
-            <div class="btn-group" style="text-align: left" dropdown is-open="status.isopen">
-                 <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle ng-disabled="disabled">
-                    <i class="glyphicon glyphicon-repeat"></i> <span class="caret"></span>
-                </button>
-            <ul class="dropdown-menu" role="menu">
-                <li><a href ng-click="hardRestart(jenkins)">Restart</a></li>
-                <li><a href ng-click="softRestart(jenkins)"> SoftRestart</a></li>
+                <div class="btn-group" style="text-align: left" dropdown is-open="status.isopen">
+                    <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle
+                            ng-disabled="disabled">
+                        <i class="glyphicon glyphicon-repeat"></i> <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href ng-click="hardRestart(jenkins)">Restart</a></li>
+                        <li><a href ng-click="softRestart(jenkins)"> SoftRestart</a></li>
 
-                </ul>
-            </div>
+                    </ul>
+                </div>
                 <a href="#!/jenkinses/{{jenkins._id}}/#" title="Show XML Config">
                     <button type="button" class="btn btn-primary dropdown-toggle">
                         <i class="glyphicon glyphicon-cog"></i>
