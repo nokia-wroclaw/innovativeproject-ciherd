@@ -1,5 +1,5 @@
 # CI-Herd
-[![Build Status](https://travis-ci.org/nokia-wroclaw/innovativeproject-ciherd.svg?branch=development)](https://travis-ci.org/nokia-wroclaw/innovativeproject-ciherd)
+[![Build Status](https://travis-ci.org/nokia-wroclaw/innovativeproject-ciherd.svg?branch=master)](https://travis-ci.org/nokia-wroclaw/innovativeproject-ciherd)
 [![Code Climate](https://codeclimate.com/github/nokia-wroclaw/innovativeproject-ciherd/badges/gpa.svg)](https://codeclimate.com/github/nokia-wroclaw/innovativeproject-ciherd)
 
 Single web application for multiple Jenkins servers managing.
