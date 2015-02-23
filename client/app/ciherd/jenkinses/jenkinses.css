@@ -1,0 +1,35 @@
+.status-online {
+  color: green;
+}
+
+.status-offline {
+  color: red;
+}
+
+.checkbox-modal {
+  top: 6px;
+}
+
+.btn-group-id {
+  bottom: 15px;
+  position: relative;
+  top: 22px;
+}
+
+.no-decoration:hover {
+  text-decoration: none;
+}
+
+.filter_box {
+  padding-bottom: 20px;
+  padding-top: 20px;
+}
+
+#actions {
+  font-family: 'Glyphicon', "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.growl-container.growl-fixed.top-right {
+  top: 40px;
+  right: 50px;
+}

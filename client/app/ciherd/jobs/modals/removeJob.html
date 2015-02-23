@@ -1,0 +1,33 @@
+<div class="modal-header">
+  <h3 class=modal-title">Delete Job</h3>
+</div>
+<form class="form-horizontal">
+  <div class="modal-body">
+
+    <div class="form-group">
+      <label class="col-xs-3 control-label">Description</label>
+
+      <div class="col-xs-6">
+        <label style="width: 300px">
+          <input type="text" class="form-control" value="{{job.name}}" disabled/>
+        </label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-xs-3 control-label">URL</label>
+
+      <div class="col-xs-6">
+        <label style="width: 300px">
+          <input type="text" class="form-control" value="{{job.url}}" disabled/>
+        </label>
+      </div>
+    </div>
+
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-danger" ng-click="deleteJob()">Delete</button>
+    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+  </div>
+
+</form>

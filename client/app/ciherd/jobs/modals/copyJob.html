@@ -1,0 +1,29 @@
+<div class="modal-header">
+  <h3 class=modal-title">Copy Job in {{jenkinses}} Jenkins</h3>
+</div>
+<form id="editForm" method="post" class="form-horizontal">
+  <div class="modal-body">
+    <div class="form-group">
+      <label class="col-xs-3 control-label">Duplicate job</label>
+
+      <div class="col-xs-6">
+        <label>
+          <input type="text" class="form-control" ng-model="job.name" name="url" disabled/>
+        </label>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-xs-3 control-label">New job name</label>
+
+      <div class="col-xs-6">
+        <label>
+          <input type="text" class="form-control" ng-model="newJobName" name="url"/>
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" ng-click="copy()">Save</button>
+    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+  </div>
+</form>

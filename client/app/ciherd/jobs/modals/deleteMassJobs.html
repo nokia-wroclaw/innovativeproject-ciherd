@@ -1,0 +1,17 @@
+<div class="modal-header">
+  <h3 class=modal-title">Delete Job</h3>
+</div>
+<form class="form-horizontal">
+  <div class="modal-body">
+    <strong>Are you sure do you want to delete this jobs?</strong>
+    <ul class="animate-repeat" ng-repeat="jenkins in checked_jenkinses">
+      <li>{{jenkins.jobName}}</li>
+    </ul>
+
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-danger" ng-click="deleteMassJobs()">Delete</button>
+    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+  </div>
+
+</form>

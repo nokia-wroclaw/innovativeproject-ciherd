@@ -1,0 +1,82 @@
+<div class="modal-header">
+  <h3 class=modal-title">View Jenkins</h3>
+</div>
+<form class="form-horizontal">
+
+  <div class="modal-body">
+
+    <div class="form-group">
+      <label class="col-xs-3 control-label">Description</label>
+
+      <div class="col-xs-6">
+        <label style="width: 300px">
+          <input type="text" class="form-control" value="{{ jenkins.description }}" disabled/>
+        </label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-xs-3 control-label">URL</label>
+
+      <div class="col-xs-6">
+        <label style="width: 300px">
+          <input type="text" class="form-control" value="{{ jenkins.url }}" disabled/>
+        </label>
+      </div>
+    </div>
+
+    <div class="form-group" ng-show="!enableAuth">
+      <label class="col-xs-3 control-label">UserID</label>
+
+      <div class="col-xs-6">
+        <label style="width: 300px">
+          <input type="text" class="form-control" value="{{ jenkins.UserID }}" disabled/>
+        </label>
+      </div>
+    </div>
+
+    <div class="form-group" ng-show="!enableAuth">
+      <label class="col-xs-3 control-label">APIToken</label>
+
+      <div class="col-xs-6">
+        <label style="width: 300px">
+          <input type="text" class="form-control" value="{{ jenkins.APIToken }}" disabled/>
+        </label>
+      </div>
+    </div>
+
+    <div class="form-group" ng-show="!enableAuth">
+      <label class="col-xs-3 control-label">UserID</label>
+
+      <div class="col-xs-6">
+        <label style="width: 300px">
+          <input type="text" class="form-control" value="{{ jenkins.SSHUsername }}" disabled/>
+        </label>
+      </div>
+    </div>
+
+    <div class="form-group" ng-show="!enableAuth">
+      <label class="col-xs-3 control-label">APIToken</label>
+
+      <div class="col-xs-6">
+        <label style="width: 300px">
+          <input type="password" class="form-control" value="{{ jenkins.SSHPassword }}" disabled/>
+        </label>
+      </div>
+    </div>
+
+    <div class="form-group" ng-show="!enableAuth">
+      <label class="col-xs-3 control-label">APIToken</label>
+
+      <div class="col-xs-6">
+        <label style="width: 300px">
+          <input type="text" class="form-control" value="{{ jenkins.SSHPort }}" disabled/>
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" ng-click="cancel()">OK</button>
+
+  </div>
+</form>

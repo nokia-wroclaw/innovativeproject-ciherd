@@ -1,0 +1,248 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<script type="text/ng-template" id="addWorkflowPipelineJob.html">
+  <div class="modal-header" ng-init="init()">
+    <h3 class=modal-title">Add Job</h3>
+  </div>
+  <form class="form-horizontal">
+    <div class="modal-body">
+
+      <div class="form-group">
+        <label class="col-xs-4 control-label">Label</label>
+
+        <div class="col-xs-6">
+          <label style="width: 300px">
+            <input type="text" class="form-control" ng-model="label" name="label"/>
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-xs-4 control-label">Jenkins Description</label>
+
+        <div class="col-xs-6">
+          <label style="width: 300px">
+            <select class="form-control" ng-model="jenkinsName"
+                    ng-options="item as item.description for item in jenkinses"></select>
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-xs-4 control-label">Job Name</label>
+
+        <div class="col-xs-6">
+          <label style="width: 300px">
+            <select class="form-control" ng-model="jobName"
+                    ng-options="item as item.name for item in jenkinsName.jobs"></select> </label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-xs-4 control-label">Build Parameters</label>
+
+        <div class="col-xs-6">
+          <label style="width: 300px">
+            <input type="text" class="form-control" ng-model="build_parameters" name="buildParameters"/>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-success" ng-click="addJob()">Add</button>
+      <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    </div>
+  </form>
+</script>
+
+<script type="text/ng-template" id="addWorkflowPipeline.html">
+  <div class="modal-header" ng-init="init()">
+    <h3 class=modal-title">Add Workflow Pipeline</h3>
+  </div>
+  <form class="form-horizontal">
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="col-xs-4 control-label">Workflow Pipeline Title</label>
+
+        <div class="col-xs-6">
+          <label style="width: 300px">
+            <input type="text" class="form-control" ng-model="workflowTitle"/>
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-xs-4 control-label">Workflow Pipeline Scheduler Date</label>
+
+        <div class="col-xs-6">
+          <label style="width: 300px">
+            <input type="text" class="form-control" ng-model="workflowCronDate"/>
+          </label>
+        </div>
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-success" ng-click="addPipelines()">Add</button>
+      <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    </div>
+  </form>
+</script>
+
+<script type="text/ng-template" id="editWorkflowPipelineJob.html">
+  <div class="modal-header" ng-init="init()">
+    <h3 class=modal-title">Add Job</h3>
+  </div>
+  <form class="form-horizontal">
+    <div class="modal-body">
+
+      <div class="form-group">
+        <label class="col-xs-4 control-label">Label</label>
+
+        <div class="col-xs-6">
+          <label style="width: 300px">
+            <input type="text" class="form-control" ng-model="jobs.label" name="label"/>
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-xs-4 control-label">Jenkins Description</label>
+
+        <div class="col-xs-6">
+          <label style="width: 300px">
+            <select class="form-control" ng-model="jenkinsName"
+                    ng-options="item as item.description for item in jenkinses"></select>
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-xs-4 control-label">Job Name</label>
+
+        <div class="col-xs-6">
+          <label style="width: 300px">
+            <select class="form-control" ng-model="jobName"
+                    ng-options="item.name as item.name for item in jenkinsName.jobs"></select> </label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-xs-4 control-label">Build Parameters</label>
+
+        <div class="col-xs-6">
+          <label style="width: 300px">
+            <input type="text" class="form-control" ng-model="jobs.buildParameters" name="buildParameters"/>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-success" ng-click="addJob()">Add</button>
+      <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    </div>
+  </form>
+</script>
+
+
+<div class="container" ng-init="init()">
+  <div class="row">
+    <div class="col-md-12">
+      <h1>Workflow Pipelines</h1>
+
+      <div class="advancedDemo row">
+        <!--        <div class="col-md-4">
+                  <div class="dropzone box box-yellow">
+                    <h3>Jobs
+                      <div class="pull-right">
+                        <button class="fa fa-plus-circle" ng-click="addJob()" title="Save to database"></button>
+                      </div>
+                    </h3>
+                          <ul dnd-list="items"
+                              dnd-allowed-types="['itemType']"
+                              dnd-external-sources="true"
+                              dnd-dragover="dragoverCallback(event, index, external, type)"
+                              dnd-drop="dropCallback(event, index, item, external, type, 'itemType')"
+                              class="itemlist">
+
+                            <li ng-repeat="item in jobs"
+                                ng-click="addJob()"
+                                dnd-draggable="item"
+                                dnd-type="'itemType'"
+                                dnd-effect-allowed="move"
+                                dnd-dragstart="logEvent('Started to drag an item', event)"
+                                dnd-moved="logEvent('Item moved', event)"
+                                dnd-copied="logEvent('Item copied', event)">
+                              {{item.label}}
+                            </li>
+                          </ul>
+                          <div class="clearfix"></div>
+                  </div>
+                </div>-->
+
+        <div class="col-md-12">
+          <div class="dropzone box box-yellow">
+            <h3>Workflow Pipelines
+              <div class="pull-right">
+                <button class="fa fa-plus-circle" ng-click="addWorkflowPipeline()" title="Save to database"></button>
+              </div>
+            </h3>
+
+            <ul dnd-list="containers"
+                dnd-allowed-types="['containerType']"
+                dnd-external-sources="true"
+                dnd-dragover="dragoverCallback(event, index, external, type)"
+                dnd-drop="dropCallback(event, index, item, external, type, 'containerType')">
+              <li ng-repeat="pipeline in pipelines"
+                  dnd-draggable="items"
+                  dnd-type="'containerType'"
+                  dnd-effect-allowed="copyMove"
+                  dnd-dragstart="logEvent('Started to drag a container', event)"
+                  dnd-moved="containers.splice($index, 1); logEvent('Container moved', event)"
+                  dnd-copied="logEvent('Container copied', event)">
+                <div class="container-element box box-blue">
+                  <h3>
+                    <span ng-show="!pipeline.saved">Draft: </span> {{pipeline.title}}
+                    <div class="pull-right">
+                      <button class="fa fa-save" ng-click="savePipeline(pipeline)" title="Save to database"></button>
+                      <button ng-show="!pipeline.scheduled" class="fa fa fa-circle-o" ng-click="runScheduler(pipeline)"
+                              title="Not Scheduled"></button>
+                      <button ng-show="pipeline.scheduled" class="fa fa-dot-circle-o" title="Scheduled"></button>
+                      <button class="fa fa-plus-circle" ng-click="addJobOnPipeline(pipeline)" title="Add Job"></button>
+                    </div>
+                  </h3>
+                  <ul dnd-list="items"
+                      dnd-allowed-types="['itemType']"
+                      dnd-horizontal-list="true"
+                      dnd-external-sources="true"
+                      dnd-dragover="dragoverCallback(event, index, external, type)"
+                      dnd-drop="dropCallback(event, index, item, external, type, 'itemType')"
+                      class="itemlist">
+                    <!--                    <li class="fa fa-clock-o fa-4x" ng-click="addJob()"
+                                            dnd-draggable="item"
+                                            dnd-type="'itemType'">
+                                        </li>-->
+                    <li ng-repeat="item in pipeline.pipeline"
+                        ng-click="editJob(item)"
+                        dnd-draggable="item"
+                        dnd-type="'itemType'"
+                        dnd-effect-allowed="copyMove"
+                        dnd-dragstart="logEvent('Started to drag an item', event)"
+                        dnd-moved="item.splice($index, 1); logEvent('Item moved', $index)"
+                        dnd-copied="logEvent('Item copied', event)">
+                      {{item.label}}
+                    </li>
+                  </ul>
+                  <div class="clearfix"></div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div ng-include="'components/navbar/footer.html'"></div>

@@ -1,0 +1,141 @@
+<!--suppress HtmlUnknownTarget -->
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<section ng-init="init()">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <h1 class="pull-left">List of Jobs <span class="badge">{{checkboxes.number}}</span></h1>
+
+        <div class="pull-right">
+          <div class="btn-group-id btn-group" dropdown>
+            <div class="btn-group" dropdown>
+              <button ng-if="checkboxes.number === 0" class="btn btn-primary" disabled>Batch Actions</button>
+              <button ng-if="checkboxes.number !== 0 " class="btn btn-primary" dropdown-toggle>Batch Actions</button>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="/jenkinses/jobs/copy">Copy Jobs</a></li>
+                <li role="presentation" class="divider"></li>
+                <li><a href="#" ng-click="massEnableJob()">Enable Jobs</a></li>
+                <li><a href="#" ng-click="massDisableJob()">Disable Jobs</a></li>
+                <li><a href="#" ng-click="massBuildJob()">Build Jobs</a></li>
+                <li><a href="#" ng-click="massDeleteJob()">Delete Jobs</a></li>
+              </ul>
+              <button ng-click="tableParams.sorting({})" class="btn btn-primary">Clear sorting</button>
+            </div>
+          </div>
+        </div>
+        <div growl id="jenkinsesGrowl"></div>
+        <div class="clearfix"></div>
+        <table ng-table="tableParams" class="table">
+          <tbody ng-repeat="jenkins in jenkinses">
+          <tr class="ng-table-group">
+            <td width="30" style="text-align: left" header="'ng-table/headers/checkbox.html'">
+              <label><input title="{{job._id}}" type="checkbox" ng-model="checkboxes.jenkins[jenkins._id]"/></label>
+            </td>
+            <td colspan="{{$columns.length}}">
+              <a style="text-decoration: none" ng-click="hideRows[jenkins._id] = !hideRows[jenkins._id]">
+                <span class="glyphicon"
+                      ng-class="{ 'glyphicon-chevron-right': hideRows[jenkins._id], 'glyphicon-chevron-down': !hideRows[jenkins._id] }"></span>
+              </a>
+              <strong><a href="{{jenkins.url}}">{{ jenkins.description }}</a></strong>
+
+            </td>
+
+          </tr>
+
+          <tr ng-hide="hideRows[jenkins._id]" ng-repeat="job in jenkins.jobs">
+            <td width="30" style="text-align: left" header="'ng-table/headers/checkbox.html'">
+              <label><input title="{{job._id}}" type="checkbox" ng-model="checkboxes.items[job._id]"/></label>
+            </td>
+
+            <td data-title="'Name'" class="text-left" sortable="'job.name'">{{job.name}}
+            </td>
+
+            <td data-title="'Color'" class="text-center" sortable="'job.color'">
+              <span ng-if="job.color == 'blue'" title="Success"><img src="assets/images/blue.png"></span>
+              <span ng-if="job.color == 'red'" title="Failed"><img src="assets/images/red.png"></span>
+              <span ng-if="job.color == 'disabled' || job.color =='notbuilt' || job.color =='grey'"><img
+                src="assets/images/disabled.png"></span>
+              <span ng-if="job.color == 'yellow'" title="Unstable"><img src="assets/images/yellow.png"></span>
+              <span ng-if="job.color == 'blue_anime'" title="In progress"><img
+                src="assets/images/blue_anime.gif"></span>
+              <span ng-if="job.color == 'red_anime'" title="In progress"><img src="assets/images/red_anime.gif"></span>
+            </td>
+
+            <td data-title="'Status'" class="text-center" sortable="'job.status'">
+              <span ng-if="job.color == 'blue'" title="Success">Success</span>
+              <span ng-if="job.color == 'red'" title="Failed">Failed</span>
+              <span ng-if="job.color == 'disabled'" title="Disabled">Disabled</span>
+              <span ng-if="job.color == 'grey'" title="Pending">Pending</span>
+              <span ng-if="job.color == 'notbuilt'" title="Not built">Not Built</span>
+              <span ng-if="job.color == 'yellow'" title="Success">Unstable</span>
+              <span ng-if="job.color == 'blue_anime'" title="In progress">In progress</span>
+              <span ng-if="job.color == 'red_anime'" title="In progress">In progress</span>
+            </td>
+
+            <td ng-if="job.color == 'notbuilt' || job.lastSuccessfulBuild.duration == undefined"
+                ng-show="job.lastSuccessfulBuild.duration == undefined" data-title="'Duration'" class="text-center">Not
+              build
+            </td>
+            <td ng-if="job.lastSuccessfulBuild.duration != undefined"
+                ng-show="job.lastSuccessfulBuild.duration != undefined" data-title="'Duration'" class="text-center">
+              {{job.lastSuccessfulBuild.duration * 0.001 | number:2}}s
+            </td>
+
+            <td data-title="'Last success date'" align="center" sortable="'job.lastSuccessfulBuild'">
+              {{job.lastSuccessfulBuild.timestamp | date: 'HH:mm | MMM dd, yyyy'}}
+
+            </td>
+
+            <td data-title="'Actions'" class="text-center">
+              <a class="no-decoration" title="View Job" ng-click="viewJob(jenkins, job)">
+                <button class="fa fa-eye"></button>
+              </a>
+
+              <a class="no-decoration" title="Copy Job" ng-click="copyJob(jenkins, job)">
+                <button class="fa fa-files-o"></button>
+              </a>
+
+              <a class="no-decoration" ng-if="job.color == 'disabled'" title="Enable Job"
+                 ng-click="enableJob(jenkins, job)">
+                <button class="fa fa-check"></button>
+              </a>
+
+              <a class="no-decoration" ng-if="job.color != 'disabled'" title="Disable Job"
+                 ng-click="disableJob(jenkins, job)">
+                <button class="fa fa-close"></button>
+              </a>
+
+              <a class="no-decoration" title="Build Job" ng-click="buildJob(jenkins, job)">
+                <button class="fa fa-cube"></button>
+              </a>
+
+              <a class="no-decoration" title="Remove Job" ng-click="deleteJob(jenkins, job)">
+                <button class="fa fa-trash-o"></button>
+              </a>
+
+              <a class="no-decoration" title="Show XML Config" ng-click="redirect(jenkins, job)">
+                <button class="fa fa-cog"></button>
+              </a>
+            </td>
+
+            <td data-title="'URL'" class="text-center">
+              <a href="{{job.url}}" class="no-decoration" title="Go to Job" target="_blank">
+                <button class="fa fa-external-link"></button>
+              </a>
+            </td>
+
+          </tr>
+          </tbody>
+        </table>
+        <script type="text/ng-template" id="ng-table/headers/checkbox.html">
+          <label for="select_all"></label>
+          <input type="checkbox" ng-model="checkboxes.checked" id="select_all" value=""/>
+        </script>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+
+<div ng-include="'components/navbar/footer.html'"></div>

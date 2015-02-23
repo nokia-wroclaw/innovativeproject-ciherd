@@ -1,0 +1,71 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+<section ng-init="initCopy()">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <h1 class="pull-left">Copy Jobs</h1>
+      </div>
+      <div class="simpleDemo row">
+        <div class="col-md-12">
+          <div class="row">
+            <div ng-repeat="(listName, list) in models.lists" class="col-md-6">
+              <div class="panel panel-info">
+                <div class="panel-heading">
+                  <h3 class="panel-title" ng-if="listName== 'Jenkinses' ">List of {{listName}}</h3>
+
+                  <h3 class="panel-title" ng-if="listName== 'naJenkinsa' ">Copy on Jenkins</h3>
+                </div>
+                <div class="panel-body">
+                  <ul dnd-list="list">
+                    <li ng-repeat="item in list"
+                        dnd-draggable="item"
+                        dnd-moved="list.splice($index, 1)"
+                        dnd-effect-allowed="move"
+                        dnd-selected="models.selected = item"
+                        ng-class="{'selected': models.selected === item}"
+                      >
+                      {{item.jenkinses.description}}
+                      {{item.job.name}}
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div ng-repeat="(listName, list) in models.test" class="col-md-6">
+              <div class="panel panel-info">
+                <div class="panel-heading">
+                  <h3 class="panel-title" ng-if="listName== 'Jobs' ">List of {{listName}}</h3>
+
+                  <h3 class="panel-title" ng-if="listName== 'toCopy' ">Duplicate jobs</h3>
+                </div>
+                <div class="panel-body">
+                  <ul dnd-list="list">
+                    <!-- The dnd-draggable directive makes an element draggable and will
+                         transfer the object that was assigned to it. If an element was
+                         dragged away, you have to remove it from the original list
+                         yourself using the dnd-moved attribute -->
+                    <li ng-repeat="item in list"
+                        dnd-draggable="item"
+                        dnd-moved="list.splice($index, 1)"
+                        dnd-effect-allowed="move"
+                        dnd-selected="models.selected = item"
+                        ng-class="{'selected': models.selected === item}"
+                      >
+                      {{item.jobs.name}}
+                    </li>
+                  </ul>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary" ng-click="massCopyJob()">Kopiuj</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div ng-include="'components/navbar/footer.html'"></div>

@@ -1,0 +1,15 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<div class="container">
+  <div class="row">
+
+    <div class="col-md-12">
+      <canvas id="line" class="chart chart-line" data="data"
+              labels="labels" legend="true" series="series"
+              click="onClick">
+      </canvas>
+    </div>
+  </div>
+</div>
+
+<div ng-include="'components/navbar/footer.html'"></div>

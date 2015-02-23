@@ -1,0 +1,17 @@
+<div class="modal-header">
+  <h3 class=modal-title">Build Jobs</h3>
+</div>
+<form method="post" class="form-horizontal">
+  <div class="modal-body">
+
+    <strong>Are you sure do you want to build this jobs?</strong>
+    <ul class="animate-repeat" ng-repeat="jenkins in checked_jenkinses">
+      <li>{{jenkins.jobName}}</li>
+    </ul>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-danger" ng-click="buildMassJobs()">Build</button>
+    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+  </div>
+
+</form>

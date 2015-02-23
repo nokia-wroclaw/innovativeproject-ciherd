@@ -1,0 +1,33 @@
+<div class="modal-header">
+  <h3 class=modal-title">Hard Restart Jenkins</h3>
+</div>
+<form id="" method="post" class="form-horizontal">
+  <div class="modal-body">
+
+    <div class="form-group">
+      <label class="col-xs-3 control-label">Description</label>
+
+      <div class="col-xs-6">
+        <label style="width: 300px">
+          <input type="text" class="form-control" value="{{jenkins.description}}" disabled/>
+        </label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-xs-3 control-label">URL</label>
+
+      <div class="col-xs-6">
+        <label style="width: 300px">
+          <input type="text" class="form-control" value="{{jenkins.url}}" disabled/>
+        </label>
+      </div>
+    </div>
+
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-danger" ng-click="hardRestartJenkins()">Restart</button>
+    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+  </div>
+
+</form>

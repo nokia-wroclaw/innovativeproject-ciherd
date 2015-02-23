@@ -1,0 +1,55 @@
+<div class="modal-header">
+  <h3 class=modal-title">View Job</h3>
+</div>
+<form class="form-horizontal">
+
+  <div class="modal-body">
+
+    <div class="form-group">
+      <label class="col-xs-3 control-label">Job name</label>
+
+      <div class="col-xs-6">
+        <label style="width: 300px">
+          <input type="text" class="form-control" value="{{ job.name }}" disabled/>
+        </label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-xs-3 control-label">URL</label>
+
+      <div class="col-xs-6">
+        <label style="width: 300px">
+          <input type="text" class="form-control" value="{{ job.url }}" disabled/>
+        </label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-xs-3 control-label">Last Duration</label>
+
+      <div class="col-xs-6">
+        <label style="width: 300px">
+          <input type="text" class="form-control" value="{{job.lastSuccessfulBuild.duration * 0.001 | number:2}}s"
+                 disabled/>
+        </label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-xs-3 control-label">Last success date</label>
+
+      <div class="col-xs-6">
+        <label style="width: 300px">
+          <input type="text" class="form-control"
+                 value="{{job.lastSuccessfulBuild.id | toDate | date: 'HH:mm | MMM dd, yyyy' }}" disabled/>
+        </label>
+      </div>
+    </div>
+
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" ng-click="cancel()">OK</button>
+
+  </div>
+</form>

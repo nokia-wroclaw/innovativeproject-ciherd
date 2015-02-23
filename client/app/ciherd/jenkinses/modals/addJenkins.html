@@ -1,0 +1,103 @@
+<div class="modal-header">
+  <h3 class=modal-title">Add Jenkins</h3>
+</div>
+<form class="form-horizontal">
+  <div class="modal-body">
+
+    <div class="form-group">
+      <label class="col-xs-3 control-label">Description</label>
+
+      <div class="col-xs-6">
+        <label style="width: 300px">
+          <input type="text" class="form-control" ng-model="desc" name="description"/>
+        </label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-xs-3 control-label">URL</label>
+
+      <div class="col-xs-6">
+        <label style="width: 300px">
+          <input type="text" class="form-control" ng-model="url" name="url"/>
+        </label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-xs-3 control-label">Enable Auth</label>
+
+      <div class="col-xs-6" style="padding-top: 6px">
+        <label style="width: 300px">
+          <input type="checkbox" ng-model="enableAuth" class="auth-button ">
+        </label>
+      </div>
+    </div>
+
+    <div class="form-group" ng-show="enableAuth">
+      <label class="col-xs-3 control-label">UserID</label>
+
+      <div class="col-xs-6">
+        <label style="width: 300px">
+          <input type="text" class="form-control" ng-model="UserID" name="UserID"/>
+        </label>
+      </div>
+    </div>
+
+    <div class="form-group" ng-show="enableAuth">
+      <label class="col-xs-3 control-label">APIToken</label>
+
+      <div class="col-xs-6">
+        <label style="width: 300px">
+          <input type="text" class="form-control" ng-model="APIToken" name="APIToken"/>
+        </label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-xs-3 control-label">Enable SSH</label>
+
+      <div class="col-xs-6" style="padding-top: 6px">
+        <label style="width: 300px">
+          <input type="checkbox" ng-model="enableSSHAuth" class="auth-button ">
+        </label>
+      </div>
+    </div>
+
+    <div class="form-group" ng-show="enableSSHAuth">
+      <label class="col-xs-3 control-label">SSH Username</label>
+
+      <div class="col-xs-6">
+        <label style="width: 300px">
+          <input type="text" class="form-control" ng-model="SSHUsername" name="SSHUsername"/>
+        </label>
+      </div>
+    </div>
+
+    <div class="form-group" ng-show="enableSSHAuth">
+      <label class="col-xs-3 control-label">SSH Password</label>
+
+      <div class="col-xs-6">
+        <label style="width: 300px">
+          <input type="password" class="form-control" ng-model="SSHPassword" name="SSHPassword"/>
+        </label>
+      </div>
+    </div>
+
+    <div class="form-group" ng-show="enableSSHAuth">
+      <label class="col-xs-3 control-label">SSH Port</label>
+
+      <div class="col-xs-6">
+        <label style="width: 300px">
+          <input type="text" class="form-control" ng-model="SSHPort" name="SSHPort"/>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-primary" ng-click="save()">Save</button>
+    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+
+  </div>
+</form>

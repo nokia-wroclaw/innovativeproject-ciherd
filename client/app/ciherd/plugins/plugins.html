@@ -1,0 +1,88 @@
+<!--suppress HtmlUnknownTarget -->
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<section ng-init="init()">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <h1 class="pull-left">List of Plugins <span class="badge">{{checkboxes.number}}</span></h1>
+
+        <div class="pull-right">
+          <div class="btn-group-id btn-group" dropdown>
+            <div class="btn-group" dropdown>
+              <button ng-if="checkboxes.number === 0" class="btn btn-primary" disabled>Batch Actions</button>
+              <button ng-if="checkboxes.number !== 0 " class="btn btn-primary" dropdown-toggle>Batch Actions</button>
+              <button ng-click="tableParams.sorting({})" class="btn btn-primary">Clear sorting</button>
+            </div>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <table ng-table="tableParams" class="table">
+          <tbody ng-repeat="jenkins in jenkinses">
+          <tr class="ng-table-group">
+            <td width="30" style="text-align: left" header="'ng-table/headers/checkbox.html'">
+              <label><input title="{{plugin._id}}" type="checkbox" ng-model="checkboxes.jenkins[jenkins._id]"/></label>
+            </td>
+            <td colspan="{{$columns.length}}">
+              <a style="text-decoration: none" ng-click="hideRows[jenkins._id] = !hideRows[jenkins._id]">
+                <span class="glyphicon"
+                      ng-class="{ 'glyphicon-chevron-right': hideRows[jenkins._id], 'glyphicon-chevron-down': !hideRows[jenkins._id] }"></span>
+              </a>
+              <strong><a href="{{jenkins.url}}">{{ jenkins.description }}</a></strong>
+
+            </td>
+
+          </tr>
+
+          <tr ng-hide="hideRows[jenkins._id]" ng-repeat="plugin in jenkins.plugins">
+            <td width="30" style="text-align: left" header="'ng-table/headers/checkbox.html'">
+              <label><input title="{{plugin._id}}" type="checkbox" ng-model="checkboxes.items[plugin._id]"/></label>
+            </td>
+
+            <td data-title="'Name'" class="text-left" sortable="'plugin.longName'"><a href="{{plugin.url}}">{{plugin.longName}}</a>
+            </td>
+
+            <td data-title="'Active'" class="text-center" sortable="'plugin.active'" ng-show="plugin.active">
+              <i class="fa fa-check"></i>
+            </td>
+            <td data-title="'Active'" class="text-center" sortable="'plugin.active'" ng-show="!plugin.active">
+              <i class="fa fa fa-times"></i>
+            </td>
+
+            <td data-title="'Enabled'" class="text-center" sortable="'plugin.active'" ng-show="plugin.enabled">
+              <i class="fa fa-check"></i>
+            </td>
+            <td data-title="'Enabled'" class="text-center" sortable="'plugin.active'" ng-show="!plugin.enabled">
+              <i class="fa fa fa-times"></i>
+            </td>
+            <td data-title="'Update Available'" class="text-center" sortable="'plugin.active'" ng-show="plugin.hasUpdate">
+              <i class="fa fa-check"></i>
+            </td>
+            <td data-title="'Update Available'" class="text-center" sortable="'plugin.active'" ng-show="!plugin.hasUpdate">
+              <i class="fa fa fa-times"></i>
+            </td>
+            <td data-title="'version'" class="text-center" sortable="'plugin.version'">
+              {{plugin.version}}
+            </td>
+
+            <td data-title="'URL'" class="text-center">
+              <a href="{{plugin.url}}" class="no-decoration" title="Go to Plugin" target="_blank">
+                <button class="fa fa-external-link"></button>
+              </a>
+            </td>
+
+
+          </tr>
+          </tbody>
+        </table>
+        <script type="text/ng-template" id="ng-table/headers/checkbox.html">
+          <label for="select_all"></label>
+          <input type="checkbox" ng-model="checkboxes.checked" id="select_all" value=""/>
+        </script>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+
+<div ng-include="'components/navbar/footer.html'"></div>

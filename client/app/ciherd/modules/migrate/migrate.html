@@ -1,0 +1,76 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+<section ng-init="init()">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <h1 class="pull-left">Migrate Jenkins</h1>
+        <div class="clearfix"></div>
+
+        <form>
+          <h1 align="center">Base Jenkins</h1>
+          <label>Choose Jenkins</label>
+          <select class="form-control"  ng-options="jenkins.description for jenkins in jenkinses" ng-model="fromJenkins" >
+          </select>
+          <hr>
+          <div class="form-group">
+            <label>IP address</label>
+            <input type="text" class="form-control" id="fromSSHIP" ng-model="fromJenkins.url"
+                   placeholder="Enter IP address" >
+          </div>
+
+          <div class="form-group">
+            <label>Port</label>
+            <input type="number" class="form-control" id="fromSSHPort" ng-model="fromJenkins.SSHPort"
+                   placeholder="Enter Port" >
+          </div>
+
+          <div class="form-group">
+            <label>SSH Username</label>
+            <input type="text" class="form-control" id="fromUsername" ng-model="fromJenkins.SSHUsername"
+                   placeholder="Enter SSH Username">
+          </div>
+
+          <div class="form-group">
+            <label>SSH Password</label>
+            <input type="password" class="form-control" id="fromPassword" ng-model="fromJenkins.SSHPassword"
+                   placeholder="Enter SSH Password">
+          </div>
+        </form>
+        <h1 align="center">Target Jenkins</h1>
+
+        <form>
+          <label>Choose Jenkins</label>
+          <select class="form-control"  ng-options="jenkins.description for jenkins in jenkinses" ng-model="toJenkins" >
+          </select>
+          <hr>
+          <div class="form-group">
+            <label>IP address</label>
+            <input type="text" class="form-control" id="toSSHIP" ng-model="toJenkins.url"
+                   placeholder="Enter IP address">
+          </div>
+          <div class="form-group">
+            <label>Port</label>
+            <input type="number" class="form-control" id="toSSHPort" ng-model="toJenkins.SSHPort"
+                   placeholder="Enter Port">
+          </div>
+
+          <div class="form-group">
+            <label>SSH Username</label>
+            <input type="text" class="form-control" id="toUsername" ng-model="toJenkins.SSHUsername"
+                   placeholder="Enter SSH Username">
+          </div>
+
+          <div class="form-group">
+            <label>SSH Password</label>
+            <input type="password" class="form-control" id="toPassword" ng-model="toJenkins.SSHPassword"
+                   placeholder="Enter SSH Password">
+          </div>
+          <button type="submit" class="btn btn-success" ng-click="migrateJenkins()">Migrate</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+</section>
+<div ng-include="'components/navbar/footer.html'"></div>
