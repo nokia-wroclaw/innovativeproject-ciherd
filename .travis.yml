@@ -1,0 +1,9 @@
+language: node_js
+node_js:
+  - "0.10"
+env:
+  - NODE_ENV=development
+services:
+  - mongodb
+notifications:
+  slack: innoprojectswinter14:EkYfys7ILoTpAiwxn0SAomTH
